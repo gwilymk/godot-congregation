@@ -20,9 +20,6 @@ func get_bounds():
 	size = Vector2(size.x / hframes, size.y / vframes)
 	return Rect2(position - size / 2, size)
 
-func is_at_position(pos):
-	return get_bounds().has_point(pos)
-
 func set_selected(is_selected):
 	selected = is_selected
 	$SelectionArrow.visible = selected
@@ -36,6 +33,7 @@ func _process(delta):
 func goto_location(new_position):
 	direction = (new_position - position).normalized()
 	var distance = (position - new_position).length()
+	$Tween.remove_all()
 	$Tween.interpolate_property(self, "position", position, new_position, distance / speed, Tween.TRANS_LINEAR, 0)
 	$Tween.start()
 

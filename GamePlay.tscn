@@ -28,4 +28,22 @@ position = Vector2( 450.64, 196.555 )
 
 position = Vector2( 610.246, 439.647 )
 
+[node name="SelectionBox" type="ColorRect" parent="." index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0.16038, 0.114716, 0.699219, 0.552471 )
+_sections_unfolded = [ "Rect", "Visibility" ]
+
 

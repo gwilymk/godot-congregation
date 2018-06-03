@@ -3,6 +3,7 @@ extends Sprite
 var last_tick_time = 0
 var current_frame_offset = 0
 var frame_offset = 0
+var is_moving = false
 
 export var speed = 100
 export var direction = Vector2(0, 1)
@@ -33,6 +34,7 @@ func _process(delta):
 func goto_location(new_position):
 	direction = (new_position - position).normalized()
 	var distance = (position - new_position).length()
+	is_moving = true
 	$Tween.remove_all()
 	$Tween.interpolate_property(self, "position", position, new_position, distance / speed, Tween.TRANS_LINEAR, 0)
 	$Tween.start()
@@ -41,7 +43,14 @@ func next_frame():
 	var angle = 2 * direction.angle() / PI
 	frame_offset = int((round(angle) + 5)) % 4
 	
-	current_frame_offset = (current_frame_offset + 1) % 8
+	if not is_punching and not is_moving:
+		current_frame_offset = 0
+	else:
+		current_frame_offset = (current_frame_offset + 1) % 8
+
 	frame = frame_offset * 8 + current_frame_offset
 	if is_punching:
 		frame += 4 * 8
+
+func on_walk_completed(object, key):
+	is_moving = false

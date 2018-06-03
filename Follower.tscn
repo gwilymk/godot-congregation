@@ -84,4 +84,6 @@ playback_speed = 1.0
 anims/bob = SubResource( 2 )
 blend_times = [  ]
 
+[connection signal="tween_completed" from="Tween" to="." method="on_walk_completed"]
+
 

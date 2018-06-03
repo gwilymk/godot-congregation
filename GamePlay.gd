@@ -8,6 +8,7 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton:
+		event.position += $Camera.position
 		if event.is_pressed() and event.button_index == BUTTON_RIGHT:
 			move_followers(event.position)
 		elif event.is_pressed() and event.button_index == BUTTON_LEFT:
@@ -15,6 +16,7 @@ func _input(event):
 		elif not event.is_pressed() and event.button_index == BUTTON_LEFT:
 			select_followers(Rect2(box_select_start, event.position - box_select_start).abs())
 	elif event is InputEventMouseMotion:
+		event.position += $Camera.position
 		if event.button_mask & BUTTON_MASK_LEFT:
 			var new_rect = Rect2(box_select_start, event.position - box_select_start).abs()
 			if new_rect.get_area() > SELECTION_RECT_MIN_AREA:

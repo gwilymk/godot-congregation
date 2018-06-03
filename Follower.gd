@@ -4,6 +4,7 @@ var last_tick_time = 0
 var current_frame_offset = 0
 var frame_offset = 0
 var is_moving = false
+export var network_id = 0
 
 export var speed = 100
 export var direction = Vector2(0, 1)

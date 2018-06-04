@@ -14,6 +14,7 @@ export var frame_time = 60
 const MIN_DISTANCE = 0.1
 
 var selected = false
+var current_path = []
 
 func _ready():
 	set_process(true)
@@ -29,10 +30,17 @@ func set_selected(is_selected):
 	$SelectionArrow.visible = selected
 
 func _process(delta):
+	if current_path.size() > 0 and !is_moving:
+		goto_location(current_path[0])
+		current_path.pop_front()
 	last_tick_time += delta * 1000
 	if last_tick_time > frame_time:
 		next_frame()
 		last_tick_time -= frame_time
+
+func follow_path(path):
+	current_path = path
+	is_moving = false
 
 func goto_location(new_position):
 	direction = (new_position - position).normalized()

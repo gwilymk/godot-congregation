@@ -76,7 +76,8 @@ func move_followers(location):
 func do_move_followers(follower_ids, location):
 	for follower in $Followers.get_children():
 		if follower.network_id in follower_ids:
-			follower.goto_location(location)
+			var path = $Map.search_route(follower.position, location)
+			follower.follow_path(path)
 
 class CommandSorter:
 	static func sort(a, b):

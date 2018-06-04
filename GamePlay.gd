@@ -80,6 +80,9 @@ func do_move_followers(follower_ids, location):
 			var path = $Map.search_route(follower.position, location)
 			follower.follow_path(path)
 
+func add_tile(id, orientation, x, y):
+	pass
+
 class CommandSorter:
 	static func sort(a, b):
 		if a.command_index == b.command_index:

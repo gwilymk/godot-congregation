@@ -43,7 +43,7 @@ const BASE_TILE_IDS = [0, 1, 2, 3, 4]
 
 
 func tile_size():
-	var s = texture.size.x/hframes
+	var s = texture.get_width()/hframes
 	return Vector2(s,s)
 
 static func new_tile(id, orientation):

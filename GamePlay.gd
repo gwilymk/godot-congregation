@@ -38,7 +38,6 @@ sync func add_command(command, tick, command_index, arguments):
 
 func _ready():
 	set_process(true)
-	next_tile()
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -82,6 +81,10 @@ func do_move_followers(follower_ids, location):
 		if follower.network_id in follower_ids:
 			var path = $Map.search_route(follower.position, location)
 			follower.follow_path(path)
+
+func add_tile_emit(id, orientation, x, y):
+	var pos = (Vector2(x,y) - get_viewport().size/2)*$Camera.zoom.x + $Camera.position
+	add_tile(id, orientation, pos.x, pos.y)
 
 func add_tile(id, orientation, x, y):
 	x = int(x / $Map.TILE_SIZE)

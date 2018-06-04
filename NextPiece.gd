@@ -6,8 +6,9 @@ signal tileClicked(id)
 var tileID = -1
 
 func _ready():
-	var t = preload("res://Tile.tscn")
+	var t = preload("res://Tile.tscn").instance()
 	region_rect = Rect2(Vector2(0,0), t.tile_size())
+	
 	vframes = t.vframes
 	hframes = t.hframes
 	visible = false
@@ -24,7 +25,7 @@ func _input(event):
 	if !visible:
 		return
 	if event is InputEventMouseButton:
-		if event.is_pressed() and event.button == BUTTON_LEFT:
+		if event.is_pressed() and event.button_index == BUTTON_LEFT:
 			if get_rect().has_point(event.position):
 				emit_signal("tileClicked", frame)
 				visible = false

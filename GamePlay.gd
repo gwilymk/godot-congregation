@@ -15,6 +15,8 @@ var commands = {}
 var player_tick_positions = {}
 var command_index = 0
 
+signal new_tile(id, orientation, in_hand)
+
 sync func update_current_tick(tick):
 	player_tick_positions[get_tree().get_rpc_sender_id()] = tick
 
@@ -81,7 +83,10 @@ func do_move_followers(follower_ids, location):
 			follower.follow_path(path)
 
 func add_tile(id, orientation, x, y):
-	pass
+	send_command("add_tile", {x = x, y = y, id = id, orientation = orientation})
+
+func do_add_tile(id, orientation, x, y):
+	$Map.create_tile(id, orientation, x, y)
 
 class CommandSorter:
 	static func sort(a, b):
@@ -97,6 +102,8 @@ func run_commands(commands):
 		match command.command:
 			"move_followers":
 				do_move_followers(command.arguments.follower_ids, command.arguments.location)
+			"add_tile":
+				do_add_tile(command.arguments.x, command.arguments.y, command.arguments.id, command.arguments.orientation)
 			_:
 				print("Unknown command " + str(command.command))
 

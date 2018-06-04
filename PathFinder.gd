@@ -5,8 +5,14 @@ var height
 
 const TYPE_WEIGHTS = [4, 3, 1]
 
+func _estimate_cost(from_id, to_id):
+	var from_point = get_point_position(from_id)
+	var to_point = get_point_position(to_id)
+	
+	return (to_point - from_point).length() * 2.5
+
 func get_id(x, y):
-	return x + y * (width + 1)
+	return x + y * (2 * width + 1)
 
 # Works on the midpoints of the grid. Rotates anti-clockwise 45 degrees
 
@@ -14,26 +20,31 @@ func init(width, height):
 	self.width = width
 	self.height = height
 	
-	for y in range(0, height + 1):
-		for x in range(0, width + 1):
-			var x_pos = x + 0.5 if y % 2 == 0 else x
-			var y_pos = y if x % 2 == 0 else y + 0.5
-			add_point(get_id(x, y), Vector3(x + 0.5, y + 0.5, 0))
+	for y in range(0, 2 * height + 1):
+		for x in range(0, 2 * width + 1):
+			if ((x ^ y) & 1) == 1:
+				var x_pos = x / 2.0
+				var y_pos = y / 2.0
+				add_point(get_id(x, y), Vector3(x_pos, y_pos, 0))
 
-	for y in range(1, height):
-		for x in range(1, width):
-			for i in range(-1, 1):
-				for j in range(-1, 1):
-					if i == 0 and j == 0:
-						continue
-					connect_points(get_id(x + i, y + j), get_id(x, y))
+	for y in range(0, 2 * height):
+		for x in range(0, 2 * width):
+				var my_id = get_id(x, y)
+				if x % 2 == 0 and y % 2 != 0:
+					connect_points(my_id, get_id(x + 1, y + 1))
+					connect_points(my_id, get_id(x + 2, y))
+					connect_points(my_id, get_id(x - 1, y + 1))
+				elif x % 2 != 0 and y % 2 == 0:
+					connect_points(my_id, get_id(x - 1, y + 1))
+					connect_points(my_id, get_id(x, y + 2))
+					connect_points(my_id, get_id(x + 1, y + 1))
 
 func add_tile(x, y, tile):
 	var edge_types = tile.edge_types()
-	set_point_weight_scale(get_id(x + 0, y + 0), TYPE_WEIGHTS[edge_types[0]])
-	set_point_weight_scale(get_id(x + 1, y + 0), TYPE_WEIGHTS[edge_types[1]])
-	set_point_weight_scale(get_id(x + 1, y + 1), TYPE_WEIGHTS[edge_types[2]])
-	set_point_weight_scale(get_id(x + 0, y + 1), TYPE_WEIGHTS[edge_types[3]])
+	set_point_weight_scale(get_id(2 * x + 1, 2 * y), TYPE_WEIGHTS[edge_types[0]])
+	set_point_weight_scale(get_id(2 * x + 2, 2 * y + 1), TYPE_WEIGHTS[edge_types[1]])
+	set_point_weight_scale(get_id(2 * x + 1, 2 * y + 2), TYPE_WEIGHTS[edge_types[2]])
+	set_point_weight_scale(get_id(2 * x, 2 * y + 1), TYPE_WEIGHTS[edge_types[3]])
 
 func find_route(start, end):
 	# Find the closest start ID

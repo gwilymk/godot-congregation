@@ -65,15 +65,18 @@ func send_command(command, arguments):
 	command_index += 1
 
 func move_followers(location):
+	var follower_id_list = []
 	for follower in $Followers.get_children():
 		if follower.selected:
-			send_command("move_follower", {location = location, follower_id = follower.network_id})
+			follower_id_list.push_back(follower.network_id)
+	
+	if follower_id_list.size() > 0:
+		send_command("move_followers", {location = location, follower_ids = follower_id_list})
 
-func do_move_follower(follower_id, location):
+func do_move_followers(follower_ids, location):
 	for follower in $Followers.get_children():
-		if follower.network_id == follower_id:
+		if follower.network_id in follower_ids:
 			follower.goto_location(location)
-			return
 
 class CommandSorter:
 	static func sort(a, b):
@@ -87,8 +90,8 @@ func run_commands(commands):
 	
 	for command in commands:
 		match command.command:
-			"move_follower":
-				do_move_follower(command.arguments.follower_id, command.arguments.location)
+			"move_followers":
+				do_move_followers(command.arguments.follower_ids, command.arguments.location)
 			_:
 				print("Unknown command " + str(command.command))
 

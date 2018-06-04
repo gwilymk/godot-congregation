@@ -1,3 +1,5 @@
+tool
+
 extends Sprite
 
 var last_tick_time = 0
@@ -10,6 +12,7 @@ export var speed = 100
 export var direction = Vector2(0, 1)
 export var is_punching = false
 export var frame_time = 60
+export var color = Vector3(0.5, 0, 0)
 
 const MIN_DISTANCE = 0.1
 
@@ -18,6 +21,9 @@ var current_path = []
 
 func _ready():
 	set_process(true)
+	material = material.duplicate()
+	color = Vector3(rand_range(0, 1), rand_range(0, 1), rand_range(0, 1))
+	material.set_shader_param("color", color)
 	next_frame()
 
 func get_bounds():

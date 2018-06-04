@@ -50,7 +50,7 @@ func tile_size():
 
 static func new_tile(id, orientation):
 	var new_tile = preload("res://Tile.tscn").instance()
-	new_tile.rotation = orientation * PI / 2
+	new_tile.rotation = ((orientation + 4) % 4) * PI / 2
 	new_tile.frame = id
 	return new_tile
 

@@ -11,6 +11,8 @@ export var direction = Vector2(0, 1)
 export var is_punching = false
 export var frame_time = 60
 
+const MIN_DISTANCE = 0.1
+
 var selected = false
 
 func _ready():
@@ -35,6 +37,8 @@ func _process(delta):
 func goto_location(new_position):
 	direction = (new_position - position).normalized()
 	var distance = (position - new_position).length()
+	if distance < MIN_DISTANCE:
+		return
 	is_moving = true
 	$Tween.remove_all()
 	$Tween.interpolate_property(self, "position", position, new_position, distance / speed, Tween.TRANS_LINEAR, 0)

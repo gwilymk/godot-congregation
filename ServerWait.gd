@@ -9,7 +9,7 @@ func _ready():
 		$StartGameButton.visible = true
 
 sync func do_start_game():
-	get_tree().change_scene("res://GamePlay.tscn")
+	get_tree().change_scene("res://Game.tscn")
 
 func start_game():
 	get_tree().set_refuse_new_network_connections(true)

@@ -94,7 +94,7 @@ func add_tile_emit(id, orientation, x, y):
 func add_tile(id, orientation, x, y):
 	x = int(x / $Map.TILE_SIZE)
 	y = int(y / $Map.TILE_SIZE)
-	if !$Map.valid_tile(x, y, id, orientation):
+	if !$Map.valid_tile(id, orientation, x, y):
 		emit_signal("new_tile", id, orientation, true)
 	else:
 		send_command("add_tile", {
@@ -110,7 +110,7 @@ func next_tile():
 
 func do_add_tile(id, orientation, x, y, player_id):
 	var is_me = player_id == 0
-	if !$Map.valid_tile(x, y, id, orientation):
+	if !$Map.valid_tile(id, orientation, x, y):
 		if is_me:
 			emit_signal("new_tile", id, orientation, true)
 	else:
@@ -133,7 +133,7 @@ func run_commands(commands):
 			"move_followers":
 				do_move_followers(command.arguments.follower_ids, command.arguments.location)
 			"add_tile":
-				do_add_tile(command.arguments.x, command.arguments.y, command.arguments.id, command.arguments.orientation, command.player_id)
+				do_add_tile(command.arguments.id, command.arguments.orientation, command.arguments.x, command.arguments.y, command.player_id)
 			_:
 				print("Unknown command " + str(command.command))
 

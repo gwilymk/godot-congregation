@@ -17,7 +17,7 @@ func _ready():
 	
 	for y in range(0, height):
 		for x in range(0, width):
-			var tile = create_tile(x, y, randi() % 5, randi() % 3)
+			var tile = create_tile(randi() % 5, randi() % 3, x, y)
 			tile.set_greyscale(1)
 
 func tile_id(x, y):
@@ -49,7 +49,7 @@ func check_edge(x, y, edge_type, edge_id):
 	else:
 		return tile.edge_types()[edge_id] == edge_type
 
-func valid_tile(x, y, id, orientation):
+func valid_tile(id, orientation, x, y):
 	if x < 0 or y < 0 or x >= width or y >= height:
 		return false
 
@@ -68,7 +68,7 @@ func valid_tile(x, y, id, orientation):
 	
 	return true
 
-func create_tile(x, y, id, orientation):
+func create_tile(id, orientation, x, y):
 	var tile = Tile.new_tile(id, orientation)
 	tile.position = Vector2(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2)
 

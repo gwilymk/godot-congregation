@@ -7,8 +7,6 @@ var tileID = -1
 
 func _ready():
 	var t = preload("res://Tile.tscn").instance()
-	region_rect = Rect2(Vector2(0,0), t.tile_size())
-	
 	vframes = t.vframes
 	hframes = t.hframes
 	visible = false

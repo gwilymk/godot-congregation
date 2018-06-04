@@ -9,7 +9,7 @@ var tileID = -1
 var orientation = 0
 
 func _on_new_tile(id, orientation, inhand):
-	print("New tile!")
+	print("New tile! " + str(id))
 	if not inhand:
 		emit_signal("newTile", id)
 	else:

@@ -24,7 +24,7 @@ func _input(event):
 		return
 	if event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == BUTTON_LEFT:
-			if get_rect().has_point(event.position):
+			if get_rect().has_point(event.global_position):
 				emit_signal("tileClicked", frame)
 				visible = false
 

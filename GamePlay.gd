@@ -88,8 +88,8 @@ func do_move_followers(follower_ids, location):
 			follower.follow_path(path)
 
 func add_tile_emit(id, orientation, x, y):
-	var pos = (Vector2(x,y) - get_viewport().size/2)*$Camera.zoom.x + $Camera.position
-	add_tile(id, orientation, pos.x, pos.y)
+	add_tile(id, orientation, x, y)
+	
 
 func add_tile(id, orientation, x, y):
 	x = int(x / $Map.TILE_SIZE)

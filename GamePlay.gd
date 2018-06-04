@@ -60,7 +60,12 @@ func _input(event):
 
 func select_followers(rect):
 	for follower in $Followers.get_children():
-		follower.set_selected(follower.get_bounds().intersects(rect))
+		var intersects = follower.get_bounds().intersects(rect)
+		if Input.is_action_pressed("ui_control"):
+			if intersects:
+				follower.set_selected(!follower.selected)
+		else:
+			follower.set_selected(intersects)
 	$SelectionBox.visible = false
 
 func send_command(command, arguments):

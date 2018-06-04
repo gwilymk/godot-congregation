@@ -86,11 +86,11 @@ func run_commands(commands):
 	commands.sort_custom(CommandSorter, "sort")
 	
 	for command in commands:
-		match command['command']:
+		match command.command:
 			"move_follower":
-				do_move_follower(command['arguments']['follower_id'], command['arguments']['location'])
+				do_move_follower(command.arguments.follower_id, command.arguments.location)
 			_:
-				print("Unknown command " + str(command['command']))
+				print("Unknown command " + str(command.command))
 
 func process_tick():
 	if commands.has(current_tick):

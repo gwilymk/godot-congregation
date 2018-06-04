@@ -38,6 +38,7 @@ sync func add_command(command, tick, command_index, arguments):
 
 func _ready():
 	set_process(true)
+	next_tile()
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -83,10 +84,31 @@ func do_move_followers(follower_ids, location):
 			follower.follow_path(path)
 
 func add_tile(id, orientation, x, y):
-	send_command("add_tile", {x = x, y = y, id = id, orientation = orientation})
+	x = int(x / $Map.TILE_SIZE)
+	y = int(y / $Map.TILE_SIZE)
+	if !$Map.valid_tile(x, y, id, orientation):
+		emit_signal("new_tile", id, orientation, true)
+	else:
+		send_command("add_tile", {
+			x = x,
+			y = y,
+			id = id,
+			orientation = orientation
+		})
 
-func do_add_tile(id, orientation, x, y):
-	$Map.create_tile(id, orientation, x, y)
+func next_tile():
+	var tile_id = randi() % (32 - 6) + 6
+	emit_signal("new_tile", tile_id, 0, false)
+
+func do_add_tile(id, orientation, x, y, player_id):
+	var is_me = player_id == get_tree().get_network_unique_id()
+	if !$Map.valid_tile(x, y, id, orientation):
+		if is_me:
+			emit_signal("new_tile", id, orientation, true)
+	else:
+		$Map.create_tile(id, orientation, x, y)
+		if is_me:
+			next_tile()
 
 class CommandSorter:
 	static func sort(a, b):
@@ -103,7 +125,7 @@ func run_commands(commands):
 			"move_followers":
 				do_move_followers(command.arguments.follower_ids, command.arguments.location)
 			"add_tile":
-				do_add_tile(command.arguments.x, command.arguments.y, command.arguments.id, command.arguments.orientation)
+				do_add_tile(command.arguments.x, command.arguments.y, command.arguments.id, command.arguments.orientation, command.player_id)
 			_:
 				print("Unknown command " + str(command.command))
 

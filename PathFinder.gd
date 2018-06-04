@@ -3,7 +3,7 @@ extends AStar
 var width
 var height
 
-const TYPE_WEIGHTS = [8, 4, 1]
+const TYPE_WEIGHTS = [8, 1, 4]
 
 func _estimate_cost(from_id, to_id):
 	var from_point = get_point_position(from_id)

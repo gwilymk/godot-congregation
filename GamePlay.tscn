@@ -14,8 +14,8 @@ _sections_unfolded = [ "Transform" ]
 [node name="Map" type="Node" parent="." index="0"]
 
 script = ExtResource( 2 )
-width = 128
-height = 128
+width = 16
+height = 16
 should_show_paths = true
 
 [node name="DebugPath" type="Line2D" parent="Map" index="0"]

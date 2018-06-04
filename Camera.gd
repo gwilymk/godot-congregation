@@ -8,6 +8,7 @@ export var ZOOM_MAX = 2
 onready var starting_position = position
 onready var current_position = position
 
+var is_moving = false
 var mouse_initial
 var initial_position
 
@@ -28,8 +29,13 @@ func _input(event):
 			initial_position = current_position
 	if event is InputEventMouseMotion:
 		if event.button_mask & BUTTON_MASK_RIGHT:
-			current_position = initial_position + (mouse_initial - event.position) * zoom.x
-
+			if (mouse_initial - event.position).length() > 10:
+				is_moving = true
+				current_position = initial_position + (mouse_initial - event.position) * zoom.x
+			else:
+				is_moving = false
+		else:
+			is_moving = false
 func _process(delta):
 	if Input.is_action_pressed("ui_up"):
 		current_position += SPEED*delta*Vector2(0,-1)

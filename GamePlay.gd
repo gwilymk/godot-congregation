@@ -40,8 +40,9 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton:
 		event.position = (event.position - get_viewport().size/2)*$Camera.zoom.x + $Camera.position
-		if event.is_pressed() and event.button_index == BUTTON_RIGHT:
-			move_followers(event.position)
+		if not event.is_pressed() and event.button_index == BUTTON_RIGHT:
+			if not $Camera.is_moving:
+				move_followers(event.position)
 		elif event.is_pressed() and event.button_index == BUTTON_LEFT:
 			box_select_start = event.position
 		elif not event.is_pressed() and event.button_index == BUTTON_LEFT:

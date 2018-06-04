@@ -2,7 +2,7 @@
 
 [ext_resource path="res://CounterSpinner.gd" type="Script" id=1]
 
-[node name="GUI" type="CanvasLayer" index="0"]
+[node name="GUI" type="CanvasLayer"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -37,5 +37,9 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( 50, 200 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+angle_from = 0
+angle_to = 1.5708
+color = Color( 1, 0, 0, 1 )
+radius = 20
 
 

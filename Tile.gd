@@ -1,0 +1,57 @@
+extends Sprite
+
+const GRASS = 0
+const ROAD = 1
+const CITY = 2
+
+# Edge types for the tiles. NESW in order
+const EDGE_TYPES = [
+	[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0],
+	[0, 0, 0, 0], [0, 2, 0, 0], [1, 1, 0, 1], [1, 1, 1, 1],
+
+	[1, 0, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [2, 2, 2, 2],
+	[1, 2, 1, 2], [0, 2, 0, 2], [2, 2, 0, 2], [2, 2, 0, 0],
+
+	[2, 1, 1, 2], [2, 0, 0, 2], [2, 1, 1, 2], [2, 0, 2, 0],
+	[2, 1, 2, 1], [2, 0, 0, 0], [2, 1, 1, 0], [2, 0, 1, 1],
+
+	[2, 1, 0, 1], [2, 1, 1, 1], [0, 1, 0, 2], [2, 0, 2, 2],
+	[1, 1, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 0],
+]
+
+# Arrays of length three representing the first edge clockwise (numbered from
+# 0 in NESW order) this side connects to.
+const CONNECTIVITY = [
+	[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3],
+	[1, 2, 3], [2, 1, 3], [1, 3, 2], [1, 2, 3],
+
+	[3, 2, 2], [0, 3, 2], [0, 3, 2], [1, 2, 3],
+	[2, 3, 0], [0, 3, 2], [1, 3, 2], [1, 0, 3],
+	
+	[3, 2, 1], [0, 2, 2], [0, 2, 2], [0, 3, 2],
+	[0, 3, 2], [0, 2, 3], [0, 2, 1], [0, 1, 3],
+	
+	[0, 3, 2], [0, 2, 3], [0, 1, 2], [0, 1, 2],
+	[1, 0, 3], [0, 3, 2], [1, 3, 2], [1, 2, 3],
+]
+
+# Tile numbers with watchtowers
+const WATCHTOWER_IDS = [30, 31]
+
+func rotate_array(array, amount):
+	if amount == 0:
+		return array
+	
+	var ret = array.duplicate()
+	for i in range(amount, array.size()):
+		ret[i] = array[i - amount]
+	for i in range(0, amount):
+		ret[i] = array[i + amount]
+	
+	return ret
+
+func edge_types():
+	return rotate_array(EDGE_TYPES[frame], int(2 * (rotation / PI)))
+
+func has_watchtower():
+	return frame in WATCHTOWER_IDS

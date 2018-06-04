@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://CounterSpinner.gd" type="Script" id=1]
+
+[node name="GUI" type="CanvasLayer" index="0"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="SidePannel" type="ColorRect" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 100.0
+margin_bottom = 600.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 1, 1, 1 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="NextPiece" type="Sprite" parent="SidePannel" index="0"]
+
+position = Vector2( 50, 60 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CounterSpinner" type="Node2D" parent="SidePannel" index="1"]
+
+position = Vector2( 50, 200 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+

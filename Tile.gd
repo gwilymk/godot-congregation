@@ -41,10 +41,6 @@ const WATCHTOWER_IDS = [30, 31]
 # Base tiles
 const BASE_TILE_IDS = [0, 1, 2, 3, 4]
 
-func _ready():
-	if is_base_tile():
-		
-
 func rotate_array(array, amount):
 	if amount == 0:
 		return array
@@ -65,3 +61,6 @@ func has_watchtower():
 
 func is_base_tile():
 	return frame in BASE_TILE_IDS
+
+func set_greyscale(amount):
+	material.set_shader_param("greyscale", amount)

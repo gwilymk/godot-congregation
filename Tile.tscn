@@ -4,15 +4,15 @@
 [ext_resource path="res://tiles.png" type="Texture" id=2]
 [ext_resource path="res://Tile.gd" type="Script" id=3]
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=1]
 
 render_priority = 0
 shader = ExtResource( 1 )
-shader_param/is_greyscale = null
+shader_param/greyscale = null
 
-[node name="Tile" type="Sprite" index="0"]
+[node name="Tile" type="Sprite"]
 
-material = SubResource( 2 )
+material = SubResource( 1 )
 texture = ExtResource( 2 )
 vframes = 8
 hframes = 8

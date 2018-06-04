@@ -50,6 +50,9 @@ func check_edge(x, y, edge_type, edge_id):
 		return tile.edge_types()[edge_id] == edge_type
 
 func valid_tile(x, y, id, orientation):
+	if !tiles[tile_id(x, y)].is_base_tile():
+		return false
+
 	var edge_types = Tile.new_tile(id, orientation).edge_types()
 	if x > 0 && !check_edge(x - 1, y, edge_types[3], 1):
 		return false

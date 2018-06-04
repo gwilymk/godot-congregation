@@ -38,6 +38,13 @@ const CONNECTIVITY = [
 # Tile numbers with watchtowers
 const WATCHTOWER_IDS = [30, 31]
 
+# Base tiles
+const BASE_TILE_IDS = [0, 1, 2, 3, 4]
+
+func _ready():
+	if is_base_tile():
+		
+
 func rotate_array(array, amount):
 	if amount == 0:
 		return array
@@ -55,3 +62,6 @@ func edge_types():
 
 func has_watchtower():
 	return frame in WATCHTOWER_IDS
+
+func is_base_tile():
+	return frame in BASE_TILE_IDS

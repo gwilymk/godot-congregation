@@ -1,16 +1,35 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GamePlay.gd" type="Script" id=1]
 [ext_resource path="res://Followers.gd" type="Script" id=2]
 [ext_resource path="res://Follower.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Camera.gd" type="Script" id=4]
+[ext_resource path="res://Map.gd" type="Script" id=4]
+[ext_resource path="res://Camera.gd" type="Script" id=5]
 
 [node name="Node" type="Node" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Followers" type="Node" parent="." index="0"]
+[node name="SelectionBox" type="ColorRect" parent="." index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0.16038, 0.114716, 0.699219, 0.552471 )
+_sections_unfolded = [ "Rect", "Visibility" ]
+
+[node name="Followers" type="Node" parent="." index="1"]
 
 script = ExtResource( 2 )
 
@@ -34,25 +53,13 @@ network_id = 3
 position = Vector2( 610.246, 439.647 )
 network_id = 4
 
-[node name="SelectionBox" type="ColorRect" parent="." index="1"]
+[node name="Map" type="Node" parent="." index="2"]
 
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 40.0
-margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-color = Color( 0.16038, 0.114716, 0.699219, 0.552471 )
-_sections_unfolded = [ "Rect", "Visibility" ]
+script = ExtResource( 4 )
+width = null
+height = null
 
-[node name="Camera" type="Camera2D" parent="." index="2"]
+[node name="Camera" type="Camera2D" parent="." index="3"]
 
 anchor_mode = 0
 rotating = false
@@ -76,7 +83,7 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 _sections_unfolded = [ "Editor" ]
 SPEED = 100
 

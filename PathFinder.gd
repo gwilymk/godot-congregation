@@ -39,12 +39,17 @@ func init(width, height):
 					connect_points(my_id, get_id(x, y + 2))
 					connect_points(my_id, get_id(x + 1, y + 1))
 
-func add_tile(x, y, tile):
+const DIRECTIONS = [
+	[1, 0],
+	[2, 1],
+	[1, 2],
+	[0, 1],
+]
+
+func add_tile(x, y, tile, direction):
 	var edge_types = tile.edge_types()
-	set_point_weight_scale(get_id(2 * x + 1, 2 * y), TYPE_WEIGHTS[edge_types[0]])
-	set_point_weight_scale(get_id(2 * x + 2, 2 * y + 1), TYPE_WEIGHTS[edge_types[1]])
-	set_point_weight_scale(get_id(2 * x + 1, 2 * y + 2), TYPE_WEIGHTS[edge_types[2]])
-	set_point_weight_scale(get_id(2 * x, 2 * y + 1), TYPE_WEIGHTS[edge_types[3]])
+	var dir = DIRECTIONS[direction]
+	set_point_weight_scale(get_id(2 * x + dir[0], 2 * y + dir[1]), TYPE_WEIGHTS[edge_types[direction]])
 
 func find_route(start, end):
 	# Find the closest start ID

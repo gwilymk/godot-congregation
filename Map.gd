@@ -25,22 +25,20 @@ func tile_id(x, y):
 
 func search_route(start, end):
 	var route = path_finder.find_route(start / TILE_SIZE, end / TILE_SIZE)
+
+	route[0] = start
+	route[-1] = end
 	
-	var ret = []
-	ret.resize(route.size() + 2)
-	ret[0] = start
-	ret[-1] = end
-	
-	for i in range(0, route.size()):
-		ret[i + 1] = Vector2(route[i].x * TILE_SIZE, route[i].y * TILE_SIZE)
+	for i in range(1, route.size() - 1):
+		route[i] = Vector2(route[i].x * TILE_SIZE, route[i].y * TILE_SIZE)
 	
 	if should_show_paths:
 		$DebugPath.visible = true
 		for i in range($DebugPath.get_point_count() - 1, -1, -1):
 			$DebugPath.remove_point(i)
-		for pos in ret:
+		for pos in route:
 			$DebugPath.add_point(pos)
-	return ret
+	return route
 
 func check_edge(x, y, edge_type, edge_id):
 	var tile = tiles[tile_id(x, y)]
@@ -80,5 +78,13 @@ func create_tile(id, orientation, x, y):
 	tiles[tile_id(x, y)] = tile
 	tile.set_greyscale(0)
 	
-	path_finder.add_tile(x, y, tile)
+	var base_tile = tile.is_base_tile()
+	if base_tile or x == 0 or !tiles[tile_id(x - 1, y)].is_base_tile():
+		path_finder.add_tile(x, y, tile, 3)
+	if base_tile or x == width or !tiles[tile_id(x + 1, y)].is_base_tile():
+		path_finder.add_tile(x, y, tile, 1)
+	if base_tile or y == 0 or !tiles[tile_id(x, y - 1)].is_base_tile():
+		path_finder.add_tile(x, y, tile, 0)
+	if base_tile or y == height or !tiles[tile_id(x, y + 1)].is_base_tile():
+		path_finder.add_tile(x, y, tile, 2)
 	return tile

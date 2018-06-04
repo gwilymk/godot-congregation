@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://GamePlay.gd" type="Script" id=1]
 [ext_resource path="res://Map.gd" type="Script" id=2]
@@ -6,7 +6,47 @@
 [ext_resource path="res://Follower.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Camera.gd" type="Script" id=5]
 
-[node name="GamePlay" type="Node"]
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+uniform vec3 color;
+
+void fragment() {
+	vec4 current_color = texture(TEXTURE, UV);
+	if (current_color.a == 1.0 && current_color.g == 0.0 && current_color.r == current_color.b) {
+		COLOR = vec4(color * current_color.x, 1);
+	} else {
+		COLOR = current_color;
+	}
+}"
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/color = Vector3( 0.900897, 0.965368, 0.22166 )
+
+[sub_resource type="ShaderMaterial" id=3]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/color = Vector3( 0.665544, 0.843477, 0.329549 )
+
+[sub_resource type="ShaderMaterial" id=4]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/color = Vector3( 0.118825, 0.339305, 0.763897 )
+
+[sub_resource type="ShaderMaterial" id=5]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/color = Vector3( 0.193558, 0.911329, 0.49803 )
+
+[node name="GamePlay" type="Node" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -35,23 +75,35 @@ script = ExtResource( 3 )
 
 [node name="Follower" parent="Followers" index="0" instance=ExtResource( 4 )]
 
+material = SubResource( 2 )
 position = Vector2( 390.48, 299.685 )
+frame = 16
 network_id = 1
+color = Vector3( 0.900897, 0.965368, 0.22166 )
 
 [node name="Follower2" parent="Followers" index="1" instance=ExtResource( 4 )]
 
+material = SubResource( 3 )
 position = Vector2( 647.078, 268.991 )
+frame = 16
 network_id = 2
+color = Vector3( 0.665544, 0.843477, 0.329549 )
 
 [node name="Follower3" parent="Followers" index="2" instance=ExtResource( 4 )]
 
+material = SubResource( 4 )
 position = Vector2( 450.64, 196.555 )
+frame = 16
 network_id = 3
+color = Vector3( 0.118825, 0.339305, 0.763897 )
 
 [node name="Follower4" parent="Followers" index="3" instance=ExtResource( 4 )]
 
+material = SubResource( 5 )
 position = Vector2( 610.246, 439.647 )
+frame = 16
 network_id = 4
+color = Vector3( 0.193558, 0.911329, 0.49803 )
 
 [node name="SelectionBox" type="ColorRect" parent="." index="2"]
 

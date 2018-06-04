@@ -18,6 +18,7 @@ void fragment() {
 		COLOR = current_color;
 	}
 }"
+_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="ShaderMaterial" id=2]
 
@@ -63,7 +64,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Follower" type="Sprite" index="0"]
+[node name="Follower" type="Sprite"]
 
 material = SubResource( 2 )
 position = Vector2( 0, -14.9201 )

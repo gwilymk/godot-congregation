@@ -10,7 +10,7 @@ render_priority = 0
 shader = ExtResource( 1 )
 shader_param/greyscale = null
 
-[node name="Tile" type="Sprite" index="0"]
+[node name="Tile" type="Sprite"]
 
 material = SubResource( 1 )
 texture = ExtResource( 2 )

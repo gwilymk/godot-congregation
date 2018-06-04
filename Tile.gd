@@ -41,6 +41,8 @@ const WATCHTOWER_IDS = [30, 31]
 # Base tiles
 const BASE_TILE_IDS = [0, 1, 2, 3, 4]
 
+func _ready():
+	material = material.duplicate()
 
 func tile_size():
 	var s = texture.get_width()/hframes
@@ -56,11 +58,14 @@ func rotate_array(array, amount):
 	if amount == 0:
 		return array
 	
-	var ret = array.duplicate()
+	amount = array.size() - amount
+	
+	var ret = []
+	ret.resize(array.size())
 	for i in range(amount, array.size()):
-		ret[i] = array[i - amount]
+		ret[i - amount] = array[i]
 	for i in range(0, amount):
-		ret[i] = array[i + amount]
+		ret[i + array.size() - amount] = array[i]
 	
 	return ret
 

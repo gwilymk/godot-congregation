@@ -109,7 +109,7 @@ func next_tile():
 	emit_signal("new_tile", tile_id, 0, false)
 
 func do_add_tile(id, orientation, x, y, player_id):
-	var is_me = player_id == get_tree().get_network_unique_id()
+	var is_me = player_id == 0
 	if !$Map.valid_tile(x, y, id, orientation):
 		if is_me:
 			emit_signal("new_tile", id, orientation, true)

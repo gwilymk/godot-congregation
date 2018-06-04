@@ -47,7 +47,7 @@ func check_edge(x, y, edge_type, edge_id):
 	if tile.is_base_tile():
 		return true
 	else:
-		return tile.edge_types[edge_id] == edge_type
+		return tile.edge_types()[edge_id] == edge_type
 
 func valid_tile(x, y, id, orientation):
 	var edge_types = Tile.new_tile(id, orientation).edge_types()
@@ -72,6 +72,7 @@ func create_tile(x, y, id, orientation):
 
 	add_child(tile)
 	tiles[tile_id(x, y)] = tile
+	tile.set_greyscale(0)
 	
 	path_finder.add_tile(x, y, tile)
 	return tile

@@ -32,7 +32,7 @@ func _input(event):
 			$TileDraggable.visible = false
 			emit_signal("placeTile", tileID, orientation, event.position.x, event.position.y)
 	if event.is_action_pressed("rotate_left"):
-		orientation = (orientation + 1) % 4
-	if event.is_action_pressed("rotate_right"):
 		orientation = (orientation + 3) % 4
+	if event.is_action_pressed("rotate_right"):
+		orientation = (orientation + 1) % 4
 	$TileDraggable.rotation = orientation * PI/2

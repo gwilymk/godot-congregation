@@ -42,7 +42,7 @@ const WATCHTOWER_IDS = [30, 31]
 const BASE_TILE_IDS = [0, 1, 2, 3, 4]
 
 static func new_tile(id, orientation):
-	var new_tile = instance()
+	var new_tile = preload("res://Tile.tscn").instance()
 	new_tile.rotation = orientation * PI / 2
 	new_tile.frame = id
 	return new_tile

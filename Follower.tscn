@@ -90,7 +90,7 @@ color = Vector3( 0.135591, 0.405263, 0.289133 )
 [node name="Tween" type="Tween" parent="." index="0"]
 
 repeat = false
-playback_process_mode = 1
+playback_process_mode = 0
 playback_speed = 1.0
 playback/active = false
 playback/repeat = false

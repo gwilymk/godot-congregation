@@ -35,7 +35,7 @@ func set_selected(is_selected):
 	selected = is_selected
 	$SelectionArrow.visible = selected
 
-func _physics_process(delta):
+func _process(delta):
 	if current_path.size() > 0 and !is_moving:
 		goto_location(current_path[0])
 		current_path.pop_front()
@@ -43,7 +43,8 @@ func _physics_process(delta):
 	if last_tick_time > frame_time:
 		next_frame()
 		last_tick_time -= frame_time
-	
+
+func _physics_process(delta):
 	# Check collisions (only if not moving)
 	if !is_moving:
 		var direction_to_move = Vector2(0, 0)

@@ -12,12 +12,15 @@ var tiles = []
 var path_finder = preload("res://PathFinder.gd").new()
 
 func _ready():
+	var random_source = preload("res://RandomNumberGenerator.gd").new(
+	  "tiles" + str(get_tree().get_meta("random_seed")))
+	
 	tiles.resize(width * height)
 	path_finder.init(width, height)
 	
 	for y in range(0, height):
 		for x in range(0, width):
-			var tile = create_tile(randi() % 5, randi() % 3, x, y)
+			var tile = create_tile(random_source.next() % 5, random_source.next() % 3, x, y)
 			tile.set_greyscale(1)
 
 func tile_id(x, y):

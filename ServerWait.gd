@@ -8,13 +8,15 @@ func _ready():
 	if tree.is_network_server():
 		$StartGameButton.visible = true
 
-sync func do_start_game():
+sync func do_start_game(random_seed):
+	get_tree().set_meta("random_seed", random_seed)
 	get_tree().change_scene("res://Game.tscn")
 
 func start_game():
 	get_tree().set_refuse_new_network_connections(true)
+	randomize()
 	
-	rpc("do_start_game")
+	rpc("do_start_game", randi())
 
 func new_peer(id):
 	$PlayersConnected.add_item("Player: " + str(id))

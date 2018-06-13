@@ -15,6 +15,8 @@ var commands = {}
 var player_tick_positions = {}
 var command_index = 0
 
+var _tile_random_source = preload("res://RandomNumberGenerator.gd").new()
+
 signal new_tile(id, orientation, in_hand)
 
 sync func update_current_tick(tick):
@@ -105,7 +107,7 @@ func add_tile(id, orientation, x, y):
 		})
 
 func next_tile():
-	var tile_id = randi() % (32 - 6) + 6
+	var tile_id = _tile_random_source.next() % (32 - 6) + 6
 	emit_signal("new_tile", tile_id, 0, false)
 
 func do_add_tile(id, orientation, x, y, player_id):

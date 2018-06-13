@@ -43,6 +43,14 @@ func _process(delta):
 	if last_tick_time > frame_time:
 		next_frame()
 		last_tick_time -= frame_time
+	
+	# Check collisions (only if not moving)
+	if !is_moving:
+		var direction_to_move = Vector2(0, 0)
+		for colliding_with in $CollisionArea.get_overlapping_areas():
+			direction_to_move += (position - colliding_with.get_parent().position)
+
+		position += 10 * delta * direction_to_move.normalized()
 
 func follow_path(path):
 	current_path = path

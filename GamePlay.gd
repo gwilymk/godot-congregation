@@ -31,11 +31,15 @@ sync func add_command(command, tick, command_index, arguments):
 		current_commands = []
 		commands[tick] = current_commands
 	
+	var player_id = get_tree().get_rpc_sender_id()
+	if player_id == 0: # get_rpc_sender_id returns 0 if it's yourself
+		player_id = get_tree().get_meta("network_peer").get_unique_id()
+	
 	current_commands.push_back({
 		command = command,
 		arguments = arguments,
 		command_index = command_index,
-		player_id = get_tree().get_rpc_sender_id()
+		player_id = player_id,
 	})
 
 func _ready():
@@ -114,7 +118,7 @@ func next_tile():
 	emit_signal("new_tile", tile_id, 0, false)
 
 func do_add_tile(id, orientation, x, y, player_id):
-	var is_me = player_id == 0
+	var is_me = player_id == get_tree().get_meta("network_peer").get_unique_id()
 	if !$Map.valid_tile(id, orientation, x, y):
 		if is_me:
 			emit_signal("new_tile", id, orientation, true)

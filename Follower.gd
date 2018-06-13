@@ -35,7 +35,7 @@ func set_selected(is_selected):
 	selected = is_selected
 	$SelectionArrow.visible = selected
 
-func _process(delta):
+func _physics_process(delta):
 	if current_path.size() > 0 and !is_moving:
 		goto_location(current_path[0])
 		current_path.pop_front()

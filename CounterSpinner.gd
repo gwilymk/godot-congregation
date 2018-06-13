@@ -15,9 +15,8 @@ var radius_prev = radius
 
 func _ready():
 	set_process(true)
-	pass
 	
-func _process(delta):
+func _physics_process(delta):
 	if angle_from_prev != angle_from:
 		angle_from_prev = angle_from
 		update()

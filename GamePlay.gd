@@ -148,7 +148,7 @@ func process_tick():
 	current_tick += 1
 	rpc("update_current_tick", current_tick)
 
-func _process(delta):
+func _physics_process(delta):
 	for id in player_tick_positions:
 		if player_tick_positions[id] < current_tick - MAX_TICK_DIFFERENCE:
 			print("Player " + str(id) + " is behind!")

@@ -61,7 +61,10 @@ func _input(event):
 				$SelectionBox.visible = true
 
 func select_followers(rect):
+	var player_id = get_tree().get_meta("network_peer").get_unique_id()
 	for follower in $Followers.get_children():
+		if follower.player_id != player_id:
+			continue
 		var intersects = follower.get_bounds().intersects(rect)
 		if Input.is_action_pressed("ui_control"):
 			if intersects:
@@ -123,6 +126,7 @@ func do_add_tile(id, orientation, x, y, player_id):
 class CommandSorter:
 	static func sort(a, b):
 		if a.command_index == b.command_index:
+			print(a.player_id)
 			return a.player_id < b.player_id
 		else:
 			return a.command_index < b.command_index

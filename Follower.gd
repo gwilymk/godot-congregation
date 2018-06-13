@@ -14,6 +14,8 @@ export var is_punching = false
 export var frame_time = 60
 export var color = Vector3(0.5, 0, 0)
 
+export var player_id = 1
+
 const MIN_DISTANCE = 0.1
 
 var selected = false

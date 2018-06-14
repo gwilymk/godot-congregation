@@ -26,5 +26,8 @@ func start_as_server():
 
 func start_as_client():
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(IP.resolve_hostname($JoinServerIP.text), SERVER_PORT)
+	var serverIP = $JoinServerIP.text
+	if serverIP == "":
+		serverIP = "127.0.0.1"
+	peer.create_client(IP.resolve_hostname(serverIP), SERVER_PORT)
 	start_wait(peer)

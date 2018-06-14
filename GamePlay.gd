@@ -43,6 +43,7 @@ sync func add_command(command, tick, command_index, arguments):
 	})
 
 func _ready():
+	$Camera.set_size(Rect2(Vector2(0,0), Vector2($Map.width*$Map.TILE_SIZE, $Map.height*$Map.TILE_SIZE)))
 	set_process(true)
 
 func _input(event):

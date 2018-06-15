@@ -86,9 +86,9 @@ func create_tile(id, orientation, x, y):
 
 	var old_tile = tiles[tile_id(x, y)]
 	if old_tile != null:
-		remove_child(old_tile)
+		$Tiles.remove_child(old_tile)
 
-	add_child(tile)
+	$Tiles.add_child(tile)
 	tiles[tile_id(x, y)] = tile
 	tile.set_greyscale(0)
 	

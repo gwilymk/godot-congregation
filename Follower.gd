@@ -21,11 +21,60 @@ const MIN_DISTANCE = 0.1
 var selected = false
 var current_path = []
 
+func _from_hsv(h, s, v):
+	h %= 360
+	var c = v * s
+	var h_prime = h / 60.0
+	var x = c * (1 - (h_prime - floor(h_prime)))
+	
+	if 0 <= h_prime && h_prime <= 1:
+		return Color(c, x, 0)
+	elif 1 <= h_prime && h_prime <= 2:
+		return Color(x, c, 0)
+	elif 2 <= h_prime && h_prime <= 3:
+		return Color(0, c, x)
+	elif 3 <= h_prime && h_prime <= 4:
+		return Color(x, 0, c)
+	else:
+		return Color(c, 0, x)
+
+func _get_player_color(player_id):
+	var player_colors
+
+	if get_tree().has_meta("player_colors"):
+		player_colors = get_tree().get_meta("player_colors")
+	else:
+		player_colors = {}
+		get_tree().set_meta("player_colors", player_colors)
+	
+	if player_colors.has(player_id):
+		return player_colors[player_id]
+	
+	var color_seed = hash(get_tree().get_meta("random_seed") + player_id)
+	var color = _from_hsv(abs(color_seed), 0.8, 0.8)
+	player_colors[player_id] = color
+	return color
+
+func _get_player_material():
+	var player_materials
+	if get_tree().has_meta("player_materials"):
+		player_materials = get_tree().get_meta("player_materials")
+	else:
+		player_materials = {}
+		get_tree().set_meta("player_materials", player_materials)
+	
+	if player_materials.has(player_id):
+		return player_materials[player_id]
+	
+	var player_material = material.duplicate()
+	var color = _get_player_color(player_id)
+	player_material.set_shader_param("color", Vector3(color.r, color.g, color.b))
+	return player_material
+
 func _ready():
 	set_process(true)
-	material = material.duplicate()
-	color = Vector3(rand_range(0, 1), rand_range(0, 1), rand_range(0, 1))
-	material.set_shader_param("color", color)
+	material = _get_player_material()
+
 	next_frame()
 
 func get_bounds():

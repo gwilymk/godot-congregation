@@ -5,6 +5,11 @@ export var ZOOM_SPEED = 5
 export var ZOOM_MIN = 0.5
 export var ZOOM_MAX = 2
 
+# Not yet taken from the actual GUI node yet. May in future.
+export var GUI_LEFT = 100
+
+var actual_visible = Rect2(0,0,0,0)
+
 onready var starting_position = position
 onready var current_position = position
 
@@ -38,6 +43,7 @@ func _input(event):
 			is_moving = false
 			
 func set_size(rect):
+	actual_visible = rect
 	limit_left = rect.position.x
 	limit_top = rect.position.y
 	limit_right = rect.position.x + rect.size.x
@@ -52,10 +58,12 @@ func _process(delta):
 		current_position += SPEED*delta*Vector2(-1,0)
 	if Input.is_action_pressed("ui_right"):
 		current_position += SPEED*delta*Vector2(1,0)
+		
+	limit_left = actual_visible.position.x - GUI_LEFT*zoom.x
 	
 	zoom += zooming*Vector2(1,1)*ZOOM_SPEED*delta
 	zooming = 0
 	zoom = Vector2(clamp(zoom.x, ZOOM_MIN, ZOOM_MAX), clamp(zoom.y, ZOOM_MIN, ZOOM_MAX))
 	
-	position = Vector2(clamp(current_position.x, starting_position.x * zoom.x, limit_right - starting_position.x*zoom.x), clamp(current_position.y, starting_position.y*zoom.y, limit_bottom - starting_position.y*zoom.y))
+	position = Vector2(clamp(current_position.x, limit_left + starting_position.x * zoom.x, limit_right - starting_position.x*zoom.x), clamp(current_position.y, limit_top + starting_position.y*zoom.y, limit_bottom - starting_position.y*zoom.y))
 	current_position = position

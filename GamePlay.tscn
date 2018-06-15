@@ -26,27 +26,27 @@ _sections_unfolded = [ "Resource" ]
 
 render_priority = 0
 shader = SubResource( 1 )
-shader_param/color = Vector3( 0.135591, 0.405263, 0.289133 )
+shader_param/color = Vector3( 0.900897, 0.965368, 0.22166 )
 
 [sub_resource type="ShaderMaterial" id=3]
 
 render_priority = 0
 shader = SubResource( 1 )
-shader_param/color = Vector3( 0.106723, 0.7533, 0.44539 )
+shader_param/color = Vector3( 0.665544, 0.843477, 0.329549 )
 
 [sub_resource type="ShaderMaterial" id=4]
 
 render_priority = 0
 shader = SubResource( 1 )
-shader_param/color = Vector3( 0.680187, 0.660885, 0.15743 )
+shader_param/color = Vector3( 0.118825, 0.339305, 0.763897 )
 
 [sub_resource type="ShaderMaterial" id=5]
 
 render_priority = 0
 shader = SubResource( 1 )
-shader_param/color = Vector3( 0.371903, 0.955427, 0.862584 )
+shader_param/color = Vector3( 0.193558, 0.911329, 0.49803 )
 
-[node name="GamePlay" type="Node" index="0"]
+[node name="GamePlay" type="Node"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -78,7 +78,7 @@ script = ExtResource( 3 )
 material = SubResource( 2 )
 position = Vector2( 390.48, 299.685 )
 network_id = 1
-color = Vector3( 0.135591, 0.405263, 0.289133 )
+color = Vector3( 0.900897, 0.965368, 0.22166 )
 player_id = 1
 
 [node name="Follower2" parent="Followers" index="1" instance=ExtResource( 4 )]
@@ -86,7 +86,7 @@ player_id = 1
 material = SubResource( 3 )
 position = Vector2( 647.078, 268.991 )
 network_id = 2
-color = Vector3( 0.106723, 0.7533, 0.44539 )
+color = Vector3( 0.665544, 0.843477, 0.329549 )
 player_id = 1
 
 [node name="Follower3" parent="Followers" index="2" instance=ExtResource( 4 )]
@@ -94,7 +94,7 @@ player_id = 1
 material = SubResource( 4 )
 position = Vector2( 450.64, 196.555 )
 network_id = 3
-color = Vector3( 0.680187, 0.660885, 0.15743 )
+color = Vector3( 0.118825, 0.339305, 0.763897 )
 player_id = 1
 
 [node name="Follower4" parent="Followers" index="3" instance=ExtResource( 4 )]
@@ -102,7 +102,7 @@ player_id = 1
 material = SubResource( 5 )
 position = Vector2( 610.246, 439.647 )
 network_id = 4
-color = Vector3( 0.371903, 0.955427, 0.862584 )
+color = Vector3( 0.193558, 0.911329, 0.49803 )
 player_id = 1
 
 [node name="SelectionBox" type="ColorRect" parent="." index="2"]
@@ -154,5 +154,6 @@ SPEED = 400
 ZOOM_SPEED = 5
 ZOOM_MIN = 0.5
 ZOOM_MAX = 2
+GUI_LEFT = 100
 
 

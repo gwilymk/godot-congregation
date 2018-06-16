@@ -11,4 +11,5 @@ func _ready():
 
 func on_item_selected(id):
 	selected = get_popup().get_item_text(id)
+	get_tree().set_meta("map_size", selected)
 	text = "Map Size: " + selected

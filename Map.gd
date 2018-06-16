@@ -3,6 +3,13 @@ extends Node
 export(int) var width
 export(int) var height
 
+
+var map_sizes = {
+	"Small": Vector2(16,16),
+	"Medium": Vector2(32,32),
+	"Large": Vector2(64,64)
+}
+
 export var should_show_paths = false
 
 const TILE_SIZE = 128
@@ -14,6 +21,10 @@ var path_finder = preload("res://PathFinder.gd").new()
 func _ready():
 	var random_source = preload("res://RandomNumberGenerator.gd").new(
 	  "tiles" + str(get_tree().get_meta("random_seed")))
+	
+	var width_and_height = map_sizes[get_tree().get_meta("map_size")]
+	width = width_and_height.x
+	height = width_and_height.y
 	
 	tiles.resize(width * height)
 	path_finder.init(width, height)
@@ -91,3 +102,4 @@ func create_tile(id, orientation, x, y):
 	if base_tile or y == height or !tiles[tile_id(x, y + 1)].is_base_tile():
 		path_finder.add_tile(x, y, tile, 2)
 	return tile
+	

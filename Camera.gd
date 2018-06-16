@@ -10,7 +10,7 @@ export var GUI_LEFT = 100
 
 var actual_visible = Rect2(0,0,0,0)
 
-onready var starting_position = position
+onready var origin_position = position
 onready var current_position = position
 
 var is_moving = false
@@ -50,6 +50,8 @@ func set_size(rect):
 	limit_bottom = rect.position.x + rect.size.y
 
 func _process(delta):
+	origin_position = get_viewport_rect().size / 2
+	
 	if Input.is_action_pressed("ui_up"):
 		current_position += SPEED*delta*Vector2(0,-1)
 	if Input.is_action_pressed("ui_down"):
@@ -65,5 +67,5 @@ func _process(delta):
 	zooming = 0
 	zoom = Vector2(clamp(zoom.x, ZOOM_MIN, ZOOM_MAX), clamp(zoom.y, ZOOM_MIN, ZOOM_MAX))
 	
-	position = Vector2(clamp(current_position.x, limit_left + starting_position.x * zoom.x, limit_right - starting_position.x*zoom.x), clamp(current_position.y, limit_top + starting_position.y*zoom.y, limit_bottom - starting_position.y*zoom.y))
+	position = Vector2(clamp(current_position.x, limit_left + origin_position.x * zoom.x, limit_right - origin_position.x*zoom.x), clamp(current_position.y, limit_top + origin_position.y*zoom.y, limit_bottom - origin_position.y*zoom.y))
 	current_position = position

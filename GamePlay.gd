@@ -48,22 +48,26 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton:
-		event.position = (event.position - get_viewport().size/2)*$Camera.zoom.x + $Camera.position
+		var pos = _to_local_coords(event.position)
 		if not event.is_pressed() and event.button_index == BUTTON_RIGHT:
 			if not $Camera.is_moving:
-				move_followers(event.position)
+				move_followers(pos)
 		elif event.is_pressed() and event.button_index == BUTTON_LEFT:
-			box_select_start = event.position
+			box_select_start = pos
 		elif not event.is_pressed() and event.button_index == BUTTON_LEFT:
-			select_followers(Rect2(box_select_start, event.position - box_select_start).abs())
+			select_followers(Rect2(box_select_start, pos - box_select_start).abs())
 	elif event is InputEventMouseMotion:
-		event.position = (event.position - get_viewport().size/2)*$Camera.zoom.x + $Camera.position
+		var pos = _to_local_coords(event.position)
 		if event.button_mask & BUTTON_MASK_LEFT:
-			var new_rect = Rect2(box_select_start, event.position - box_select_start).abs()
+			var new_rect = Rect2(box_select_start, pos - box_select_start).abs()
 			if new_rect.get_area() > SELECTION_RECT_MIN_AREA:
 				$SelectionBox.rect_position = new_rect.position
 				$SelectionBox.rect_size = new_rect.size
 				$SelectionBox.visible = true
+
+onready var _initial_viewport = get_viewport()
+func _to_local_coords(coord):
+	return (coord - _initial_viewport.size/2)*$Camera.zoom.x + $Camera.position
 
 func select_followers(rect):
 	var player_id = get_tree().get_meta("network_peer").get_unique_id()

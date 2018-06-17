@@ -23,8 +23,8 @@ func _ready():
 	  "tiles" + str(get_tree().get_meta("random_seed")))
 	
 	var width_and_height = map_sizes[get_tree().get_meta("map_size")]
-	width = width_and_height.x
-	height = width_and_height.y
+	width = int(width_and_height.x)
+	height = int(width_and_height.y)
 	
 	tiles.resize(width * height)
 	path_finder.init(width, height)

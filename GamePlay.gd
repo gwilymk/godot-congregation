@@ -102,7 +102,8 @@ func do_move_followers(follower_ids, location):
 			follower.follow_path(path)
 
 func add_tile_emit(id, orientation, x, y):
-	add_tile(id, orientation, x, y)
+	var localCords = _to_local_coords(Vector2(x,y))
+	add_tile(id, orientation, localCords.x, localCords.y)
 	
 
 func add_tile(id, orientation, x, y):

@@ -37,6 +37,11 @@ func _ready():
 func tile_id(x, y):
 	return x + y * width
 
+func from_tile_id(id):
+	var x = id % width
+	var y = (id - x) / width
+	return [x, y]
+
 func search_route(start, end):
 	var route = path_finder.find_route(start / TILE_SIZE, end / TILE_SIZE)
 
@@ -80,6 +85,59 @@ func valid_tile(id, orientation, x, y):
 	
 	return true
 
+func id_in_direction(id, direction):
+	if direction == 0 and id >= width:
+		return id - width
+	elif direction == 1 and (id % width) < width - 1:
+		return id + 1
+	elif direction == 2 and (id < (width * (width - 1))):
+		return id + width
+	elif direction == 3 and (id % width != 0):
+		return id - 1
+	else:
+		return -1
+
+# Returns a list of ids containing the given city, or null
+# if the city is incomplete
+func trace_city(id, already_searched, from_direction):
+	var tile = tiles[id]
+	if tile.edge_types()[from_direction] != 2:
+		return null
+	
+	already_searched.push_back(id)
+	
+	for direction in tile.connections(from_direction):
+		var next_id = id_in_direction(id, direction)
+		if next_id == -1:
+			return null
+		if next_id in already_searched:
+			continue
+		
+		if trace_city(next_id, already_searched, (direction + 2) % 4) == null:
+			return null
+	
+	return already_searched
+
+func check_cities(id, already_searched = [], from_direction = null):
+	# Go out in each direction
+	var edge_types = tiles[id].edge_types()
+	# Don't want to duplicate cities
+	var checked_directions = []
+
+	for direction in range(0, 4):
+		if direction in checked_directions:
+			continue
+		if edge_types[direction] == 2:
+			for dir in tiles[id].connections(direction):
+				checked_directions.push_back(dir)
+
+			# Start a city trace
+			var city = trace_city(id, [], direction)
+			if city != null:
+				for tile in city:
+					tiles[tile].set_greyscale(0.6)
+				print("New city: ", city)
+
 func create_tile(id, orientation, x, y):
 	var tile = Tile.new_tile(id, orientation)
 	tile.position = Vector2(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2)
@@ -90,7 +148,9 @@ func create_tile(id, orientation, x, y):
 
 	$Tiles.add_child(tile)
 	tiles[tile_id(x, y)] = tile
+	
 	tile.set_greyscale(0)
+	check_cities(tile_id(x, y))
 	
 	var base_tile = tile.is_base_tile()
 	if base_tile or x == 0 or !tiles[tile_id(x - 1, y)].is_base_tile():

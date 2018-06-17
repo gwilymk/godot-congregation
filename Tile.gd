@@ -5,6 +5,9 @@ const ROAD = 1
 const CITY = 2
 
 # Edge types for the tiles. NESW in order
+# 0 = grass
+# 1 = road
+# 2 = city
 const EDGE_TYPES = [
 	[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0],
 	[0, 0, 0, 0], [0, 2, 0, 0], [1, 1, 0, 1], [1, 1, 1, 1],
@@ -71,6 +74,38 @@ func rotate_array(array, amount):
 
 func edge_types():
 	return rotate_array(EDGE_TYPES[frame], int(2 * (rotation / PI)))
+
+## Return all the directions that connect to dir
+func connections(dir):
+	var rotation_factor = int(2 * (rotation / PI))
+	dir = (dir - rotation_factor + 4) % 4
+	var connections = CONNECTIVITY[frame]
+
+	var ret = {}
+	ret[dir] = true
+	# Trace backwards and forwards. Keep iterating through the
+	# connections and check if that is in ret. If it is, add it,
+	# otherwise skip. Keep going until ret doesn't change size
+	var prev_size = 0
+	while ret.size() != prev_size:
+		prev_size = ret.size()
+		# Forwards trace
+		for direction in ret.keys():
+			if direction != 3:
+				ret[connections[direction]] = true
+		
+		# Backwards trace
+		for direction in ret.keys():
+			for i in range(0, 3):
+				if connections[i] == direction:
+					ret[i] = true
+
+	var ret_array = ret.keys()
+	for i in range(0, ret_array.size()):
+		ret_array[i] = (ret_array[i] + rotation_factor + 4) % 4
+	ret_array.sort()
+
+	return ret_array
 
 func has_watchtower():
 	return frame in WATCHTOWER_IDS

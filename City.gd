@@ -7,18 +7,22 @@ var current_time = 0
 signal spawn_timer
 
 func _ready():
-	collision_layer = 0
-	collision_mask = 1
 	set_process(true)
 
-func set_polygon(polygon):
-	poly = CollisionPolygon2D.new()
-	poly.polygon = polygon
-	add_child(poly)
+func set_polygons(polygons):
+	for polygon in polygons:
+		var poly = CollisionPolygon2D.new()
+		poly.polygon = polygon
+		add_child(poly)
+		
+		var visible_polygon = Polygon2D.new()
+		visible_polygon.polygon = polygon
+		visible_polygon.color = Color(0.9, 0, 0.4, 0.5)
+		add_child(visible_polygon)
 
 func _physics_process(delta):
 	var followers = get_overlapping_areas()
-	if followers.length() == 0:
+	if followers.size() == 0:
 		current_time = clamp(current_time - delta, 0, city_time)
 		return
 

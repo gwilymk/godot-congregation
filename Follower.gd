@@ -1,5 +1,3 @@
-tool
-
 extends Sprite
 
 var last_tick_time = 0
@@ -95,12 +93,18 @@ func _process(delta):
 		next_frame()
 		last_tick_time -= frame_time
 
+# Used to make an object as a follower
+func follower_tag():
+	pass
+
 func _physics_process(delta):
 	# Check collisions (only if not moving)
 	if !is_moving:
 		var direction_to_move = Vector2(0, 0)
 		for colliding_with in $CollisionArea.get_overlapping_areas():
-			direction_to_move += (position - colliding_with.get_parent().position)
+			var entity = colliding_with.get_parent()
+			if entity.has_method("follower_tag"):
+				direction_to_move += (position - entity.position)
 
 		position += 10 * delta * direction_to_move.normalized()
 

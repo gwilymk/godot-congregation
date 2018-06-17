@@ -134,9 +134,7 @@ func check_cities(id, already_searched = [], from_direction = null):
 			# Start a city trace
 			var city = trace_city(id, [], direction)
 			if city != null:
-				for tile in city:
-					tiles[tile].set_greyscale(0.6)
-				print("New city: ", city)
+				$Cities.new_city(city, TILE_SIZE, width)
 
 func create_tile(id, orientation, x, y):
 	var tile = Tile.new_tile(id, orientation)

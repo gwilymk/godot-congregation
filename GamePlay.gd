@@ -109,7 +109,7 @@ func add_tile_emit(id, orientation, x, y):
 func add_tile(id, orientation, x, y):
 	x = int(x / $Map.TILE_SIZE)
 	y = int(y / $Map.TILE_SIZE)
-	if !$Map.valid_tile(id, orientation, x, y):
+	if !$Map.valid_tile(id, orientation, x, y) or !$Lighting.LightSquares.has(Vector2(x,y)):
 		emit_signal("new_tile", id, orientation, true)
 	else:
 		send_command("add_tile", {

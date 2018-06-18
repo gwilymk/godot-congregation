@@ -11,11 +11,11 @@ export var VIEW = 4
 export var WATCHTOWER = 6
 
 func _process(delta):
+	var prevLight = LightSquares
 	LightSquares = []
-	
-	
 	var followers = get_parent().get_node("Followers").get_children()
-	
+
+
 	for follower in followers:
 		if follower.player_id == my_player_id:
 			var posExact = follower.position / tile_size
@@ -33,7 +33,10 @@ func _process(delta):
 					var yDif = posIn.y + y
 					if xDif*xDif + yDif*yDif < visibleRange*visibleRange:
 						LightSquares.push_back(posRound + Vector2(x,y))
-	update()
+	
+	
+	if LightSquares != prevLight:
+		update()
 
 func _draw():	
 	var tile = Vector2(tile_size,tile_size)

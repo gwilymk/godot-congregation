@@ -2,27 +2,11 @@ extends Node2D
 
 const SQUARE_EDGES = [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
 
-func has_tile_in_direction(id, city, direction, width):
-	if direction == 0:
-		return (id - width) in city
-	elif direction == 1:
-		return (id + 1) in city
-	elif direction == 2:
-		return (id + width) in city
-	elif direction == 3:
-		return (id - 1) in city
-
 func tile_corner(id, width, tile_size):
 	var x = id % width
 	var y = (id - x) / width
 	
 	return Vector2(x, y) * tile_size
-
-func add_direction_coordinates(direction, tile_corner, tile_size):
-	var ret = PoolVector2Array()
-	ret.push_back(tile_corner + SQUARE_EDGES[direction] * tile_size)
-	ret.push_back(tile_corner + SQUARE_EDGES[(direction + 1) % 4] * tile_size)
-	return ret
 
 func new_city(city_connections, tile_size, map_width):
 	# Need to somehow create the city object from this...

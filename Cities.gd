@@ -51,6 +51,5 @@ func new_city(city_connections, tile_size, map_width):
 		])
 		polygons.push_back(polygon)
 
-	print(polygons)
 	new_city.set_polygons(polygons)
 	add_child(new_city)

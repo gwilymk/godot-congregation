@@ -11,6 +11,7 @@ export var VIEW = 4
 export var WATCHTOWER = 6
 
 func _process(delta):
+	return
 	var prevLight = LightSquares
 	LightSquares = []
 	var followers = get_parent().get_node("Followers").get_children()
@@ -38,7 +39,8 @@ func _process(delta):
 	if LightSquares != prevLight:
 		update()
 
-func _draw():	
+func _draw():
+	return
 	var tile = Vector2(tile_size,tile_size)
 	for x in range(0, map_size.x):
 		for y in range(0, map_size.y):

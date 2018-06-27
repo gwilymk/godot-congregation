@@ -49,13 +49,12 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
-radius = 11.2357
-height = 18.7935
+extents = Vector2( 8.68491, 9.44088 )
 
-[node name="Follower" type="Sprite"]
+[node name="Follower" type="Sprite" index="0"]
 
 material = SubResource( 1 )
 position = Vector2( 0, -14.9201 )
@@ -113,7 +112,8 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="Collision" type="CollisionShape2D" parent="CollisionArea" index="0"]
 
-position = Vector2( 0, 0.951302 )
+position = Vector2( 0, 2.14322 )
+scale = Vector2( 1, 2.0645 )
 shape = SubResource( 4 )
 
 [connection signal="tween_completed" from="Tween" to="." method="on_walk_completed"]

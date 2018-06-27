@@ -1,10 +1,13 @@
 extends Area2D
 
-const city_time = 10
+const city_time = 1
 
 var current_time = 0
+var tile_centres = []
 
-signal spawn_timer
+var direction_to_spawn = 0
+
+signal add_follower
 
 func _ready():
 	set_process(true)
@@ -14,6 +17,13 @@ func set_polygons(polygons):
 		var poly = CollisionPolygon2D.new()
 		poly.polygon = polygon
 		add_child(poly)
+		
+		var centre = Vector2(0.0, 0.0)
+		for point in polygon:
+			centre += point
+		
+		centre /= polygon.size()
+		tile_centres.push_back(centre)
 		
 		var visible_polygon = Polygon2D.new()
 		visible_polygon.polygon = polygon
@@ -35,5 +45,9 @@ func _physics_process(delta):
 	current_time += delta
 	
 	if current_time >= city_time:
-		emit_signal("spawn_timer", self, current_team)
+		var centres = []
+		for point in tile_centres:
+			direction_to_spawn = (direction_to_spawn + 1) % 4
+			var angle = Vector2(0.1, 0).rotated(direction_to_spawn * PI / 2)
+			emit_signal("add_follower", current_team, point + angle)
 		current_time -= city_time

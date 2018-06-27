@@ -8,7 +8,7 @@
 [ext_resource path="res://Camera.gd" type="Script" id=6]
 [ext_resource path="res://Lighting.gd" type="Script" id=7]
 
-[node name="GamePlay" type="Node" index="0"]
+[node name="GamePlay" type="Node"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -127,5 +127,8 @@ GUI_LEFT = 100
 
 script = ExtResource( 7 )
 VIEW = 4
+WATCHTOWER = 6
+
+[connection signal="spawn_follower" from="Map/Cities" to="." method="add_follower"]
 
 

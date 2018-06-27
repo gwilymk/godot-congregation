@@ -85,9 +85,6 @@ func set_selected(is_selected):
 	$SelectionArrow.visible = selected
 
 func _process(delta):
-	if current_path.size() > 0 and !is_moving:
-		goto_location(current_path[0])
-		current_path.pop_front()
 	last_tick_time += delta * 1000
 	if last_tick_time > frame_time:
 		next_frame()
@@ -98,10 +95,17 @@ func follower_tag():
 	pass
 
 func _physics_process(delta):
+	if current_path.size() > 0 and !is_moving:
+		goto_location(current_path[0])
+		current_path.pop_front()
 	# Check collisions (only if not moving)
 	if !is_moving:
 		var direction_to_move = Vector2(0, 0)
+		var total = 0
 		for colliding_with in $CollisionArea.get_overlapping_areas():
+			total += 1
+			if total > 10:
+				break
 			var entity = colliding_with.get_parent()
 			if entity.has_method("follower_tag"):
 				direction_to_move += (position - entity.position)

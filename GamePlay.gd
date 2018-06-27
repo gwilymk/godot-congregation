@@ -15,6 +15,8 @@ var commands = {}
 var player_tick_positions = {}
 var command_index = 0
 
+var next_network_id = 100
+
 var _tile_random_source = preload("res://RandomNumberGenerator.gd").new()
 
 signal new_tile(id, orientation, in_hand)
@@ -109,7 +111,7 @@ func add_tile_emit(id, orientation, x, y):
 func add_tile(id, orientation, x, y):
 	x = int(x / $Map.TILE_SIZE)
 	y = int(y / $Map.TILE_SIZE)
-	if !$Map.valid_tile(id, orientation, x, y) or !$Lighting.LightSquares.has(Vector2(x,y)):
+	if !$Map.valid_tile(id, orientation, x, y):# or !$Lighting.LightSquares.has(Vector2(x,y)):
 		emit_signal("new_tile", id, orientation, true)
 	else:
 		send_command("add_tile", {
@@ -152,6 +154,14 @@ func run_commands(commands):
 				do_add_tile(command.arguments.id, command.arguments.orientation, command.arguments.x, command.arguments.y, command.player_id)
 			_:
 				print("Unknown command " + str(command.command))
+
+func add_follower(team, location):
+	var follower = preload("res://Follower.tscn").instance()
+	follower.player_id = team
+	follower.position = location
+	next_network_id += 1
+	follower.network_id = next_network_id
+	$Followers.add_child(follower)
 
 func process_tick():
 	if commands.has(current_tick):

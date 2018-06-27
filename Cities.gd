@@ -1,5 +1,7 @@
 extends Node2D
 
+signal spawn_follower
+
 const SQUARE_EDGES = [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
 
 func tile_corner(id, width, tile_size):
@@ -37,3 +39,7 @@ func new_city(city_connections, tile_size, map_width):
 
 	new_city.set_polygons(polygons)
 	add_child(new_city)
+	new_city.connect("add_follower", self, "new_follower")
+
+func new_follower(team, location):
+	emit_signal("spawn_follower", team, location)

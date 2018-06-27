@@ -157,11 +157,11 @@ func create_tile(id, orientation, x, y):
 	var base_tile = tile.is_base_tile()
 	if base_tile or x == 0 or !tiles[tile_id(x - 1, y)].is_base_tile():
 		path_finder.add_tile(x, y, tile, 3)
-	if base_tile or x == width or !tiles[tile_id(x + 1, y)].is_base_tile():
+	if base_tile or x == width - 1 or !tiles[tile_id(x + 1, y)].is_base_tile():
 		path_finder.add_tile(x, y, tile, 1)
 	if base_tile or y == 0 or !tiles[tile_id(x, y - 1)].is_base_tile():
 		path_finder.add_tile(x, y, tile, 0)
-	if base_tile or y == height or !tiles[tile_id(x, y + 1)].is_base_tile():
+	if base_tile or y == height - 1 or !tiles[tile_id(x, y + 1)].is_base_tile():
 		path_finder.add_tile(x, y, tile, 2)
 	return tile
 	

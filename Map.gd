@@ -102,27 +102,27 @@ func id_in_direction(id, direction):
 #
 # Connections is an array of 2-length arrays of tile ids, representing the
 # connections between the tiles.
-func trace_city(id, already_searched, from_direction, connections):
+func trace_city(id, from_direction, connections, first = true):
 	var tile = tiles[id]
 	if tile.edge_types()[from_direction] != 2:
 		return null
-	
-	already_searched.push_back(id)
-	connections.push_back([id, id_in_direction(id, from_direction)])
+
+	if !first:
+		connections.push_back([id, id_in_direction(id, from_direction)])
 	
 	for direction in tile.connections(from_direction):
 		var next_id = id_in_direction(id, direction)
 		if next_id == -1:
 			return null
-		if next_id in already_searched:
+		if [id, next_id] in connections or [next_id, id] in connections:
 			continue
 		
-		if trace_city(next_id, already_searched, (direction + 2) % 4, connections) == null:
+		if trace_city(next_id, (direction + 2) % 4, connections, false) == null:
 			return null
 	
 	return connections
 
-func check_cities(id, already_searched = [], from_direction = null):
+func check_cities(id):
 	# Go out in each direction
 	var edge_types = tiles[id].edge_types()
 	# Don't want to duplicate cities
@@ -136,7 +136,7 @@ func check_cities(id, already_searched = [], from_direction = null):
 				checked_directions.push_back(dir)
 
 			# Start a city trace
-			var city = trace_city(id, [], direction, [])
+			var city = trace_city(id, direction, [])
 			if city != null:
 				$Cities.new_city(city, TILE_SIZE, width)
 

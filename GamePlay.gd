@@ -97,10 +97,16 @@ func move_followers(location):
 	if follower_id_list.size() > 0:
 		send_command("move_followers", {location = location, follower_ids = follower_id_list})
 
+# Slight lag fix, scatter followers slightly
+func fiddle_location_offset(num_followers_to_move, id):
+	var amount_to_fiddle = Vector2(1, 0) * sqrt(abs((hash(id + 1) % num_followers_to_move) - 1)) * 30
+	return amount_to_fiddle.rotated(hash(id))
+
 func do_move_followers(follower_ids, location):
 	for follower in $Followers.get_children():
 		if follower.network_id in follower_ids:
-			var path = $Map.search_route(follower.position, location)
+			var path = $Map.search_route(follower.position,
+				location + fiddle_location_offset(follower_ids.size(), follower.network_id))
 			follower.follow_path(path)
 
 func add_tile_emit(id, orientation, x, y):

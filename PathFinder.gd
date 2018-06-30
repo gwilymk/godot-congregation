@@ -9,7 +9,7 @@ func _estimate_cost(from_id, to_id):
 	var from_point = get_point_position(from_id)
 	var to_point = get_point_position(to_id)
 	
-	return (to_point - from_point).length() * 7
+	return (to_point - from_point).length() * 10
 
 func get_id(x, y):
 	return x + y * (2 * width + 1)

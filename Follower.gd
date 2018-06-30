@@ -103,14 +103,15 @@ func _physics_process(delta):
 		var direction_to_move = Vector2(0, 0)
 		var total = 0
 		for colliding_with in $CollisionArea.get_overlapping_areas():
-			total += 1
-			if total > 10:
-				break
 			var entity = colliding_with.get_parent()
-			if entity.has_method("follower_tag"):
+			if entity.has_method("follower_tag") and entity.is_moving == false:
 				direction_to_move += (position - entity.position)
-
-		position += 10 * delta * direction_to_move.normalized()
+				total += 1
+				if total > 50:
+					break
+		if total > 0 && direction_to_move.length_squared() == 0:
+			direction_to_move = Vector2(1, 0).rotated(hash(network_id))
+		position += 10 * delta * direction_to_move.normalized() * clamp(total / 5, 1, 5)
 
 func follow_path(path):
 	current_path = path

@@ -36,6 +36,9 @@ func _from_hsv(h, s, v):
 	else:
 		return Color(c, 0, x)
 
+func get_color():
+	return _get_player_color(player_id)
+
 func _get_player_color(player_id):
 	var player_colors
 

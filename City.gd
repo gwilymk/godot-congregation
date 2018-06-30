@@ -47,7 +47,7 @@ func _physics_process(delta):
 	if current_time >= city_time:
 		var centres = []
 		for point in tile_centres:
-			direction_to_spawn = (direction_to_spawn + 1) % 4
-			var angle = Vector2(0.1, 0).rotated(direction_to_spawn * PI / 2)
+			direction_to_spawn += 1
+			var angle = Vector2(0.1, 0).rotated(direction_to_spawn)
 			emit_signal("add_follower", current_team, point + angle)
 		current_time -= city_time

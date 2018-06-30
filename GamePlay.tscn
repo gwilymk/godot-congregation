@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://GamePlay.gd" type="Script" id=1]
 [ext_resource path="res://Map.gd" type="Script" id=2]
 [ext_resource path="res://Cities.gd" type="Script" id=3]
 [ext_resource path="res://Followers.gd" type="Script" id=4]
-[ext_resource path="res://Follower.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Camera.gd" type="Script" id=6]
-[ext_resource path="res://Lighting.gd" type="Script" id=7]
+[ext_resource path="res://Camera.gd" type="Script" id=5]
+[ext_resource path="res://Lighting.gd" type="Script" id=6]
 
 [node name="GamePlay" type="Node"]
 
@@ -47,30 +46,6 @@ script = ExtResource( 3 )
 [node name="Followers" type="Node" parent="." index="1"]
 
 script = ExtResource( 4 )
-
-[node name="Follower" parent="Followers" index="0" instance=ExtResource( 5 )]
-
-position = Vector2( 390.48, 299.685 )
-network_id = 1
-color = Vector3( 0.900897, 0.965368, 0.22166 )
-
-[node name="Follower2" parent="Followers" index="1" instance=ExtResource( 5 )]
-
-position = Vector2( 647.078, 268.991 )
-network_id = 2
-color = Vector3( 0.665544, 0.843477, 0.329549 )
-
-[node name="Follower3" parent="Followers" index="2" instance=ExtResource( 5 )]
-
-position = Vector2( 450.64, 196.555 )
-network_id = 3
-color = Vector3( 0.118825, 0.339305, 0.763897 )
-
-[node name="Follower4" parent="Followers" index="3" instance=ExtResource( 5 )]
-
-position = Vector2( 610.246, 439.647 )
-network_id = 4
-color = Vector3( 0.193558, 0.911329, 0.49803 )
 
 [node name="SelectionBox" type="ColorRect" parent="." index="2"]
 
@@ -115,7 +90,7 @@ drag_margin_bottom = 0.5
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 _sections_unfolded = [ "Drag Margin", "Limit", "Material", "Smoothing", "Transform" ]
 SPEED = 400
 ZOOM_SPEED = 5
@@ -125,7 +100,7 @@ GUI_LEFT = 100
 
 [node name="Lighting" type="Node2D" parent="." index="4"]
 
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 VIEW = 4
 WATCHTOWER = 6
 

@@ -44,9 +44,41 @@ sync func add_command(command, tick, command_index, arguments):
 		player_id = player_id,
 	})
 
+func place_player_followers(player, index, num_players):
+	var starting_seed = get_tree().get_meta("random_seed")
+	var unit_start = Vector2(1, 0).rotated(starting_seed + (index / num_players) * 2 * PI)
+	var map_size = Vector2($Map.width, $Map.height)
+	var follower_location = Vector2(
+		map_size.x / 2 + (map_size.x / 3) * unit_start.x,
+		map_size.y / 2 + (map_size.y / 3) * unit_start.y) * $Map.TILE_SIZE
+
+	for i in range(0, 4):
+		add_follower(player, follower_location)
+	
+	return follower_location
+	
+
+func place_followers():
+	var players = get_tree().get_meta("player_ids")
+	var player_num = 0
+	var ret
+
+	for player in players:
+		var location = place_player_followers(player, player_num, players.size())
+		if player == get_tree().get_meta("network_peer").get_unique_id():
+			# This is me, so want to ensure that the camera focuses on this
+			ret = location
+		player_num += 1
+
+	return ret
+
 func _ready():
 	$Camera.set_size(Rect2(Vector2(0,0), Vector2($Map.width*$Map.TILE_SIZE, $Map.height*$Map.TILE_SIZE)))
 	set_process(true)
+	
+	var my_location = place_followers()
+	$Camera.position = my_location
+	$Camera.current_position = my_location
 
 func _input(event):
 	if event is InputEventMouseButton:

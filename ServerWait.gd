@@ -1,5 +1,7 @@
 extends Control
 
+var player_ids = []
+
 func _ready():
 	var tree = get_tree()
 	tree.connect("network_peer_connected", self, "new_peer")
@@ -11,6 +13,9 @@ func _ready():
 sync func do_start_game(random_seed, mapsize):
 	print(mapsize)
 	get_tree().set_meta("random_seed", random_seed)
+	get_tree().set_meta("map_size", mapsize)
+	player_ids.sort()
+	get_tree().set_meta("player_ids", player_ids)
 	get_tree().change_scene("res://Game.tscn")
 
 func start_game():
@@ -21,3 +26,4 @@ func start_game():
 
 func new_peer(id):
 	$PlayersConnected.add_item("Player: " + str(id))
+	player_ids.push_back(id)

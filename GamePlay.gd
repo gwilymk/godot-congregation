@@ -46,7 +46,7 @@ sync func add_command(command, tick, command_index, arguments):
 
 func place_player_followers(player, index, num_players):
 	var starting_seed = get_tree().get_meta("random_seed")
-	var unit_start = Vector2(1, 0).rotated(starting_seed + (index / num_players) * 2 * PI)
+	var unit_start = Vector2(1, 0).rotated(starting_seed).rotated((float(index) / num_players) * 2 * PI)
 	var map_size = Vector2($Map.width, $Map.height)
 	var follower_location = Vector2(
 		map_size.x / 2 + (map_size.x / 3) * unit_start.x,

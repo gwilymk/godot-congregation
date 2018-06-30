@@ -54,7 +54,7 @@ tracks/1/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 8.68491, 9.44088 )
 
-[node name="Follower" type="Sprite"]
+[node name="Follower" type="Sprite" index="0"]
 
 material = SubResource( 1 )
 position = Vector2( 0, -14.9201 )

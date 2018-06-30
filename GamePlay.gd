@@ -214,7 +214,10 @@ func _physics_process(delta):
 	for id in player_tick_positions:
 		if player_tick_positions[id] < current_tick - MAX_TICK_DIFFERENCE:
 			print("Player " + str(id) + " is behind!")
+			get_tree().paused = true
 			return
+	
+	get_tree().paused = false
 
 	current_tick_time += delta
 	

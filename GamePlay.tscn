@@ -7,14 +7,17 @@
 [ext_resource path="res://Camera.gd" type="Script" id=5]
 [ext_resource path="res://Lighting.gd" type="Script" id=6]
 
-[node name="GamePlay" type="Node"]
+[node name="GamePlay" type="Node" index="0"]
 
+pause_mode = 2
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Pause", "Transform" ]
 
 [node name="Map" type="Node" parent="." index="0"]
 
+pause_mode = 1
 script = ExtResource( 2 )
+_sections_unfolded = [ "Pause" ]
 width = 16
 height = 16
 should_show_paths = true
@@ -45,7 +48,9 @@ script = ExtResource( 3 )
 
 [node name="Followers" type="Node" parent="." index="1"]
 
+pause_mode = 1
 script = ExtResource( 4 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="SelectionBox" type="ColorRect" parent="." index="2"]
 

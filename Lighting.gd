@@ -11,20 +11,24 @@ export var VIEW = 4
 export var WATCHTOWER = 6
 
 func _process(delta):
-	return
-	var prevLight = LightSquares
+	#var prevLight = LightSquares
 	LightSquares = []
 	var followers = get_parent().get_node("Followers").get_children()
-
+	var handled_ids = {}
 
 	for follower in followers:
 		if follower.player_id == my_player_id:
 			var posExact = follower.position / tile_size
 			var posRound = Vector2(floor(posExact.x), floor(posExact.y))
 			var posIn = posExact-posRound
+			var tile_id = Map.tile_id(posRound.x, posRound.y)
+			if handled_ids.has(tile_id):
+				continue
+			else:
+				handled_ids[tile_id] = true
 			
 			var visibleRange
-			if Map.tiles[Map.tile_id(posRound.x, posRound.y)].has_watchtower():
+			if Map.tiles[tile_id].has_watchtower():
 				visibleRange = WATCHTOWER
 			else:
 				visibleRange = VIEW
@@ -36,11 +40,10 @@ func _process(delta):
 						LightSquares.push_back(posRound + Vector2(x,y))
 	
 	
-	if LightSquares != prevLight:
+	#if LightSquares != prevLight:
 		update()
 
 func _draw():
-	return
 	var tile = Vector2(tile_size,tile_size)
 	for x in range(0, map_size.x):
 		for y in range(0, map_size.y):

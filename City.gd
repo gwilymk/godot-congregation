@@ -1,6 +1,6 @@
 extends Area2D
 
-const city_time = 1
+const city_time = 10
 
 var current_time = 0
 var tile_centres = []

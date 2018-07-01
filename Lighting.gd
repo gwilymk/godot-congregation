@@ -10,6 +10,19 @@ onready var Map = get_parent().get_node("Map")
 export var VIEW = 4
 export var WATCHTOWER = 6
 
+func _light_up_area(centre, visibility_range, light_squares):
+	var short_visibility = (visibility_range - 1) * (visibility_range - 1)
+	var long_visibility = visibility_range * visibility_range
+	for x in range(-visibility_range, visibility_range):
+		for y in range(-visibility_range, visibility_range):
+			var x_diff = centre.x + x 
+			var y_diff = centre.y + y
+			var pos = centre + Vector2(x,y)
+			if x*x + y*y < short_visibility:
+				light_squares[pos] = 0
+			elif x*x + y*y < long_visibility:
+				light_squares[pos] = light_squares[pos] if light_squares.has(pos) else 0.5
+
 func _process(delta):
 	#var prevLight = LightSquares
 	LightSquares = {}
@@ -20,9 +33,8 @@ func _process(delta):
 		if follower.player_id == my_player_id:
 			var posExact = follower.position / tile_size
 			var posRound = Vector2(floor(posExact.x), floor(posExact.y))
-			var posIn = posExact-posRound
 			var tile_id = Map.tile_id(posRound.x, posRound.y)
-			if handled_ids.has(tile_id):
+			if tile_id == -1 or handled_ids.has(tile_id):
 				continue
 			else:
 				handled_ids[tile_id] = true
@@ -32,12 +44,7 @@ func _process(delta):
 				visibleRange = WATCHTOWER
 			else:
 				visibleRange = VIEW
-			for x in range(-visibleRange,visibleRange):
-				for y in range(-visibleRange,visibleRange):
-					var xDif = posIn.x + x 
-					var yDif = posIn.y + y
-					if xDif*xDif + yDif*yDif < visibleRange*visibleRange:
-						LightSquares[posRound + Vector2(x,y)] = true
+			_light_up_area(posRound, visibleRange, LightSquares)
 
 	update()
 
@@ -45,6 +52,9 @@ func _draw():
 	var tile = Vector2(tile_size,tile_size)
 	for x in range(0, map_size.x):
 		for y in range(0, map_size.y):
-			if LightSquares.has(Vector2(x,y)):
-				continue
-			draw_rect(Rect2(Vector2(x,y) * tile_size, tile), Color(0,0,0))
+			var pos = Vector2(x, y)
+			if LightSquares.has(pos):
+				var alpha = LightSquares[pos]
+				draw_rect(Rect2(Vector2(x,y) * tile_size, tile), Color(0,0,0,alpha))
+			else:
+				draw_rect(Rect2(Vector2(x,y) * tile_size, tile), Color(0,0,0))

@@ -35,7 +35,10 @@ func _ready():
 			tile.set_greyscale(1)
 
 func tile_id(x, y):
-	return x + y * width
+	if x >= 0 and x < width and y >= 0 and y < height:
+		return x + y * width
+	else:
+		return -1
 
 func from_tile_id(id):
 	var x = id % width

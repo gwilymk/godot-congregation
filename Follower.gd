@@ -97,24 +97,32 @@ func _process(delta):
 func follower_tag():
 	pass
 
+func _get_direction_to_be_pushed():
+	var direction_to_move = Vector2(0, 0)
+	var total = 0
+	for colliding_with in $CollisionArea.get_overlapping_areas():
+		var entity = colliding_with.get_parent()
+		if entity.has_method("follower_tag") and entity.is_moving == false:
+			direction_to_move += (position - entity.position)
+			total += 1
+			if total > 50:
+				break
+	if total > 0 && direction_to_move.length_squared() == 0:
+		direction_to_move = Vector2(1, 0).rotated(hash(network_id))
+
+	return direction_to_move.normalized() * clamp(total / 5, 1, 5)
+
+func _get_pushed_around(delta):
+	var direction_to_move = _get_direction_to_be_pushed()
+	position += 20 * delta * direction_to_move
+
 func _physics_process(delta):
 	if current_path.size() > 0 and !is_moving:
 		goto_location(current_path[0])
 		current_path.pop_front()
 	# Check collisions (only if not moving)
 	if !is_moving:
-		var direction_to_move = Vector2(0, 0)
-		var total = 0
-		for colliding_with in $CollisionArea.get_overlapping_areas():
-			var entity = colliding_with.get_parent()
-			if entity.has_method("follower_tag") and entity.is_moving == false:
-				direction_to_move += (position - entity.position)
-				total += 1
-				if total > 50:
-					break
-		if total > 0 && direction_to_move.length_squared() == 0:
-			direction_to_move = Vector2(1, 0).rotated(hash(network_id))
-		position += 10 * delta * direction_to_move.normalized() * clamp(total / 5, 1, 5)
+		_get_pushed_around(delta)
 
 func follow_path(path):
 	current_path = path

@@ -34,7 +34,21 @@ func _draw():
 		color_to_draw = no_team
 	color_to_draw.a = current_time / city_time / 2
 	for centre in tile_centres:
-		draw_circle(centre, 20 * sqrt((current_time / city_time)), color_to_draw)
+		# draw_circle(centre, 20 * sqrt((current_time / city_time)), color_to_draw)
+		draw_sector(centre, 20, 0, 2*PI*sqrt((current_time / city_time)), color_to_draw)
+
+func draw_sector(centre, radius, angle_from, angle_to, color):
+	
+	var NUMBER_OF_POINTS = 20
+	var points = PoolVector2Array()
+	points.push_back(centre)
+	var colors = PoolColorArray([color])
+	
+	for i in range(NUMBER_OF_POINTS+1):
+		var a = angle_from + i * (angle_to - angle_from) / NUMBER_OF_POINTS - PI/2
+		points.push_back(centre + Vector2(cos(a)*radius, sin(a)*radius))
+	draw_polygon(points, colors)
+	pass
 
 func _physics_process(delta):
 	var followers = get_overlapping_areas()

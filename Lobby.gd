@@ -19,14 +19,14 @@ func start_wait(peer):
 	tree.change_scene("res://ServerWait.tscn")
 
 func start_as_server():
-	if $MapSize.selected == null:
+	if $GUI/MapSize.selected == null:
 		$MustSelectMapSizeDialog.popup()
 	else:
 		start_server()
 
 func start_as_client():
 	var peer = NetworkedMultiplayerENet.new()
-	var serverIP = $JoinServerIP.text
+	var serverIP = $GUI/JoinServerIP.text
 	if serverIP == "":
 		serverIP = "127.0.0.1"
 	peer.create_client(IP.resolve_hostname(serverIP), SERVER_PORT)

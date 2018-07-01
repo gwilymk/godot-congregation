@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Lobby.gd" type="Script" id=1]
-[ext_resource path="res://MenuButton.gd" type="Script" id=2]
+[ext_resource path="res://title.png" type="Texture" id=2]
+[ext_resource path="res://MenuButton.gd" type="Script" id=3]
 
 [node name="Lobby" type="Control"]
 
@@ -18,16 +19,53 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Grow Direction" ]
 
-[node name="CreateServerButton" type="Button" parent="." index="0"]
+[node name="title" type="TextureRect" parent="." index="0"]
 
 anchor_left = 0.5
 anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = 68.0
-margin_top = 165.0
-margin_right = 165.0
-margin_bottom = 185.0
+margin_left = -512.0
+margin_right = 511.0
+margin_bottom = 767.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Focus", "Grow Direction", "Hint", "Rect" ]
+
+[node name="GUI" type="Container" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 319.0
+margin_top = 27.0
+margin_right = 359.0
+margin_bottom = 67.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="CreateServerButton" type="Button" parent="GUI" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = 448.0
+margin_top = 228.0
+margin_right = 545.0
+margin_bottom = 248.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -43,16 +81,16 @@ text = "Create Server"
 flat = false
 align = 1
 
-[node name="JoinServerIP" type="LineEdit" parent="." index="1"]
+[node name="JoinServerIP" type="LineEdit" parent="GUI" index="1"]
 
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -154.0
-margin_top = -21.0
-margin_right = 52.0
-margin_bottom = 4.0
+margin_left = 226.0
+margin_top = 259.0
+margin_right = 432.0
+margin_bottom = 284.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -68,16 +106,16 @@ caret_blink = false
 caret_blink_speed = 0.65
 caret_position = 0
 
-[node name="JoinServerButton" type="Button" parent="." index="2"]
+[node name="JoinServerButton" type="Button" parent="GUI" index="2"]
 
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 75.0
-margin_top = -20.0
-margin_right = 154.0
-margin_bottom = 3.0
+margin_left = 455.0
+margin_top = 260.0
+margin_right = 534.0
+margin_bottom = 283.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -93,16 +131,16 @@ text = "Join Server"
 flat = false
 align = 1
 
-[node name="MapSize" type="MenuButton" parent="." index="3"]
+[node name="MapSize" type="MenuButton" parent="GUI" index="3"]
 
-anchor_left = 0.0
+anchor_left = 0.5
 anchor_top = 0.0
-anchor_right = 0.0
+anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = 362.0
-margin_top = 165.0
-margin_right = 561.0
-margin_bottom = 185.0
+margin_left = 226.0
+margin_top = 227.0
+margin_right = 435.0
+margin_bottom = 247.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -118,19 +156,21 @@ text = "Map Size"
 flat = false
 align = 1
 items = [  ]
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
-[node name="MustSelectMapSizeDialog" type="AcceptDialog" parent="." index="4"]
+[node name="MustSelectMapSizeDialog" type="AcceptDialog" parent="." index="2"]
 
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -194.5
-margin_top = -29.0
-margin_right = 194.5
-margin_bottom = 29.0
+margin_left = 12.0
+margin_top = -2.0
+margin_right = 401.0
+margin_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -142,10 +182,10 @@ window_title = "Must select a map size"
 resizable = false
 dialog_text = "You must select a map size before you can create a server"
 dialog_hide_on_ok = true
-_sections_unfolded = [ "Dialog", "Popup" ]
+_sections_unfolded = [ "Dialog", "Popup", "Visibility" ]
 
-[connection signal="pressed" from="CreateServerButton" to="." method="start_as_server"]
+[connection signal="pressed" from="GUI/CreateServerButton" to="." method="start_as_server"]
 
-[connection signal="pressed" from="JoinServerButton" to="." method="start_as_client"]
+[connection signal="pressed" from="GUI/JoinServerButton" to="." method="start_as_client"]
 
 

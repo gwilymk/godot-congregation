@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ 0, 4 ]
 }
 
-[node name="ClickNotification" type="Sprite" index="0"]
+[node name="ClickNotification" type="Sprite"]
 
 texture = ExtResource( 1 )
 hframes = 5

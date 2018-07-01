@@ -86,6 +86,9 @@ func _input(event):
 		if not event.is_pressed() and event.button_index == BUTTON_RIGHT:
 			if not $Camera.is_moving:
 				move_followers(pos)
+				var click_notification = preload("res://ClickNotification.tscn").instance()
+				click_notification.position = pos
+				$ClickNotificationLocation.add_child(click_notification)
 		elif event.is_pressed() and event.button_index == BUTTON_LEFT:
 			box_select_start = pos
 		elif not event.is_pressed() and event.button_index == BUTTON_LEFT:

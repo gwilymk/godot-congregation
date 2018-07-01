@@ -7,7 +7,7 @@
 [ext_resource path="res://Camera.gd" type="Script" id=5]
 [ext_resource path="res://Lighting.gd" type="Script" id=6]
 
-[node name="GamePlay" type="Node" index="0"]
+[node name="GamePlay" type="Node"]
 
 pause_mode = 2
 script = ExtResource( 1 )
@@ -108,6 +108,8 @@ GUI_LEFT = 100
 script = ExtResource( 6 )
 VIEW = 4
 WATCHTOWER = 6
+
+[node name="ClickNotificationLocation" type="Node2D" parent="." index="5"]
 
 [connection signal="spawn_follower" from="Map/Cities" to="." method="add_follower"]
 

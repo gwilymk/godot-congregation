@@ -41,6 +41,7 @@ func _physics_process(delta):
 	if followers.size() == 0:
 		current_time = clamp(current_time - delta, 0, city_time)
 		current_team_color = no_team
+		update()
 		return
 
 	var current_team = followers[0].get_parent().player_id
@@ -48,6 +49,7 @@ func _physics_process(delta):
 	for follower in followers:
 		if follower.get_parent().player_id != current_team:
 			current_time = clamp(current_time - delta, 0, city_time)
+			update()
 			return
 
 	current_time += delta

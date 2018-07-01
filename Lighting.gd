@@ -11,7 +11,7 @@ export var VIEW = 4
 export var WATCHTOWER = 6
 
 func _process(delta):
-	#var prevLight = LightSquares
+	var prevLight = LightSquares
 	LightSquares = []
 	var followers = get_parent().get_node("Followers").get_children()
 	var handled_ids = {}
@@ -40,7 +40,7 @@ func _process(delta):
 						LightSquares.push_back(posRound + Vector2(x,y))
 	
 	
-	#if LightSquares != prevLight:
+	if LightSquares != prevLight:
 		update()
 
 func _draw():

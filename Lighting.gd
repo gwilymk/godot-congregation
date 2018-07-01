@@ -1,6 +1,6 @@
 extends Node2D
 
-var LightSquares = []
+var LightSquares = {}
 onready var my_player_id = get_tree().get_meta("network_peer").get_unique_id()
 onready var tile_size = get_parent().get_node("Map").TILE_SIZE
 onready var map_size = Vector2(get_parent().get_node("Map").width, get_parent().get_node("Map").height)
@@ -11,8 +11,8 @@ export var VIEW = 4
 export var WATCHTOWER = 6
 
 func _process(delta):
-	var prevLight = LightSquares
-	LightSquares = []
+	#var prevLight = LightSquares
+	LightSquares = {}
 	var followers = get_parent().get_node("Followers").get_children()
 	var handled_ids = {}
 
@@ -37,11 +37,9 @@ func _process(delta):
 					var xDif = posIn.x + x 
 					var yDif = posIn.y + y
 					if xDif*xDif + yDif*yDif < visibleRange*visibleRange:
-						LightSquares.push_back(posRound + Vector2(x,y))
-	
-	
-	if LightSquares != prevLight:
-		update()
+						LightSquares[posRound + Vector2(x,y)] = true
+
+	update()
 
 func _draw():
 	var tile = Vector2(tile_size,tile_size)

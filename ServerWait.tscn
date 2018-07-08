@@ -3,7 +3,7 @@
 [ext_resource path="res://ServerWait.gd" type="Script" id=1]
 [ext_resource path="res://title.png" type="Texture" id=2]
 
-[node name="ServerWait" type="Control" index="0"]
+[node name="ServerWait" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0

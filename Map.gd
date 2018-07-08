@@ -10,8 +10,6 @@ var map_sizes = {
 	"Large": Vector2(64,64)
 }
 
-export var should_show_paths = false
-
 const TILE_SIZE = 128
 const Tile = preload("res://Tile.gd")
 
@@ -53,13 +51,7 @@ func search_route(start, end):
 	
 	for i in range(1, route.size() - 1):
 		route[i] = Vector2(route[i].x * TILE_SIZE, route[i].y * TILE_SIZE)
-	
-	if should_show_paths:
-		$DebugPath.visible = true
-		for i in range($DebugPath.get_point_count() - 1, -1, -1):
-			$DebugPath.remove_point(i)
-		for pos in route:
-			$DebugPath.add_point(pos)
+
 	return route
 
 func check_edge(x, y, edge_type, edge_id):

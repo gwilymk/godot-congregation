@@ -7,7 +7,7 @@
 [ext_resource path="res://Camera.gd" type="Script" id=5]
 [ext_resource path="res://Lighting.gd" type="Script" id=6]
 
-[node name="GamePlay" type="Node"]
+[node name="GamePlay" type="Node" index="0"]
 
 pause_mode = 2
 script = ExtResource( 1 )
@@ -20,22 +20,10 @@ script = ExtResource( 2 )
 _sections_unfolded = [ "Pause" ]
 width = 16
 height = 16
-should_show_paths = true
 
-[node name="DebugPath" type="Line2D" parent="Map" index="0"]
+[node name="Tiles" type="Node2D" parent="Map" index="0"]
 
-visible = false
-points = PoolVector2Array(  )
-width = 10.0
-default_color = Color( 0.4, 0.5, 1, 1 )
-texture_mode = 100
-sharp_limit = 2.0
-round_precision = 8
-_sections_unfolded = [ "Border", "Capping", "Fill", "Material", "Visibility" ]
-
-[node name="Tiles" type="Node2D" parent="Map" index="1"]
-
-[node name="Cities" type="Area2D" parent="Map" index="2"]
+[node name="Cities" type="Area2D" parent="Map" index="1"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
